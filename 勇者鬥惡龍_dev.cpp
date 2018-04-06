@@ -4,12 +4,24 @@
 #include<Windows.h>
 #include<iomanip>
 using namespace std;
+int dragon_death_check(int dhp){
+	if(dhp==0)
+	    {
+			Sleep(700);
+			cout<<endl<<"勇者擊敗了惡龍!";
+			Sleep(500);
+			cout<<endl;
+			system("pause");
+			exit(0);
+			return 0;
+	    }
+}
 int main()
 {
 	int yhp,yatk,dhp,datk,i,R,D,rr,ff=0,f,c=0,st=0,de=0;
 	int chp,hp,ddhp,dd=0,ii=0,cc=0,d=0,b=0,bhp,sh=0,ang=0;
-	int freeze=1,fire=1,swipe=1,dizzy=1,blood=1,shield=1,cure=1,treat=1,pow=0;
-	int fre=18,fir=8,swi=5,diz=13,blo=27,shi=16,cur=20,tre=14;
+	int freeze=1,fire=1,swipe=1,dizzy=1,blood=1,shield=1,cure=1,treat=1,pow=0; //技能開關 
+	int fre=18,fir=8,swi=5,diz=13,blo=27,shi=16,cur=20,tre=14; //Cool Down 
 	double r;
 	string s,yn;
 	cout<<" ---------------"<<endl;
@@ -118,6 +130,7 @@ int main()
 	for(i=1;i>0;i++)
 	{
 		cout<<endl<<"------------------------------------------------------------"<<endl;
+		/* 使用者介面 */
 	   	cout<<"第 "<<i<<" 回合:"<<endl;
 		if(ang>=10&&pow==0)
 		{
@@ -140,6 +153,7 @@ int main()
 		cout<<endl<<endl;
 		cout<<"怒氣值: "<<ang<<endl<<endl;
 		cout<<"勇者血量:"<<yhp<<"/"<<hp<<"  惡龍血量:"<<dhp<<"/"<<ddhp<<endl<<endl;
+		// 各項技能CD判斷
 		if(freeze==0)
 		{
 			if(fre<18)
@@ -196,6 +210,7 @@ int main()
 			else if(tre==14)
 				treat++;
 		}
+		// 隨機傷害倍率
 		srand(time(NULL));
 		R=rand()%14;
 		r=0;
@@ -229,8 +244,8 @@ int main()
 			r=1.8;
 			break;
 		}
-		rr=yatk*r;
-		while(cin>>s)
+		rr=yatk*r; //計算勇者造成傷害
+		while(cin>>s) //使用者輸入指令與判斷
 		{
 			cout<<endl;
 			if(s=="+")
@@ -243,15 +258,7 @@ int main()
 	   			dhp=dhp-rr;
 	   			if(dhp<0)
 					dhp=0;
-				if(dhp==0)
-			    {
-					Sleep(700);
-					cout<<endl<<"勇者擊敗了惡龍!";
-					Sleep(500);
-					cout<<endl;
-					system("pause");
-					return 0;
-			    }
+				dragon_death_check(dhp);
 	   			break;
 			}
 			else if(s=="++")
@@ -262,7 +269,7 @@ int main()
 		    		cout<<"\a(暴擊!)";
 		    	cout<<endl;
 	   			dhp=dhp-(rr/2);
-	   			srand(time(NULL));
+	   			srand(time(NULL)); //計算第二次勇者攻擊傷害值
 				R=rand()%14;
 				r=0;
 				Sleep(300);
@@ -303,15 +310,7 @@ int main()
 	   			dhp=dhp-(rr/2);
 	   			if(dhp<0)
 					dhp=0;
-				if(dhp==0)
-			    {
-					Sleep(700);
-					cout<<endl<<"勇者擊敗了惡龍!";
-					Sleep(500);
-					cout<<endl;
-					system("pause");
-					return 0;
-			    }
+				dragon_death_check(dhp);
 	   			break;
 			}
 			else if(s=="-")
@@ -349,15 +348,7 @@ int main()
 	    		swi=swi-5;
 	    		if(dhp<0)
 					dhp=0;
-				if(dhp==0)
-			    {
-					Sleep(700);
-					cout<<endl<<"勇者擊敗了惡龍!";
-					Sleep(500);
-					cout<<endl;
-					system("pause");
-					return 0;
-			    }
+				dragon_death_check(dhp);
 	    		break;
 			}
 			else if(dizzy==1&&s=="4")
@@ -427,15 +418,7 @@ int main()
 					dhp=0;
 				ang=ang-10;
 				Sleep(1200);
-				if(dhp==0)
-			    {
-					Sleep(700);
-					cout<<endl<<"勇者擊敗了惡龍!";
-					Sleep(500);
-					cout<<endl;
-					system("pause");
-					return 0;
-			    }
+				dragon_death_check(dhp);
 			    D=0;
 				srand(time(NULL));
 				D=rand()%10;
@@ -477,15 +460,7 @@ int main()
 				cout<<endl;
 				cout<<"燃燒對惡龍造成了 "<<f<<" 點傷害"<<endl;
 				ii--;
-				if(dhp==0)
-			    {
-					Sleep(700);
-					cout<<endl<<"勇者擊敗了惡龍!";
-					Sleep(500);
-					cout<<endl;
-					system("pause");
-					return 0;
-			    }
+				dragon_death_check(dhp);
 			}
 			if(cc>0)
 			{
@@ -517,15 +492,7 @@ int main()
 				cout<<endl;
 				cout<<"勇者將惡龍的 "<<bhp<<" 點血量轉換成自己的血量"<<endl;
 				b--;
-				if(dhp==0)
-			    {
-					Sleep(700);
-					cout<<endl<<"勇者擊敗了惡龍!";
-					Sleep(500);
-					cout<<endl;
-					system("pause");
-					return 0;
-			    }
+				dragon_death_check(dhp);
 			}
 			cout<<endl;
 		}
@@ -639,15 +606,7 @@ int main()
 			}
 			if(dhp<0)
 				dhp=0;
-			if(dhp==0)
-			{
-				Sleep(700);
-				cout<<endl<<"勇者擊敗了惡龍!"<<endl<<endl;
-				Sleep(500);
-				cout<<endl;
-				system("pause");
-				return 0;
-	   		}
+			dragon_death_check(dhp);
 		    if(yhp<0)
 				yhp=0;
 		    if(yhp<=0)
