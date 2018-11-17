@@ -34,19 +34,19 @@ int main()
 	int fre=18,fir=8,swi=5,diz=13,blo=27,shi=16,cur=20,tre=14; //Cool Down
 	double r;
 	string s,yn;
-	cout<<" ---------------"<<endl;
-	cout<<"|"<<"★☆★☆★☆★"<<" |"<<endl;
-	cout<<"|"<<"  勇者鬥惡龍  "<<" |"<<endl;
-	cout<<"|"<<"☆★☆★☆★☆"<<" |"<<endl;
-	cout<<" ---------------"<<endl;
-	cout<<white_text("Beta 4.0.5 (dev)")<<endl<<endl;
-	cout<<"勇者最大血量: ";
+	cout<<white_text(" ---------------")<<endl;
+	cout<<white_text("|★☆★☆★☆★ |")<<endl;
+	cout<<white_text("|  勇者鬥惡龍   |")<<endl;
+	cout<<white_text("|☆★☆★☆★☆ |")<<endl;
+	cout<<white_text(" ---------------")<<endl;
+	cout<<"Beta 4.0.5 (dev)"<<endl<<endl;
+	cout<<white_text("勇者最大血量: ");
 	cin>>yhp;
-	cout<<endl<<"勇者基礎攻擊力: ";
+	cout<<endl<<white_text("勇者基礎攻擊力: ");
 	cin>>yatk;
-	cout<<endl<<"惡龍最大血量: ";
+	cout<<endl<<white_text("惡龍最大血量: ");
 	cin>>dhp;
-	cout<<endl<<"惡龍基礎攻擊力: ";
+	cout<<endl<<white_text("惡龍基礎攻擊力: ");
 	cin>>datk;
 	cout<<"------------------------------------------------------------"<<endl;
 	f=yatk*0.45;
@@ -54,9 +54,9 @@ int main()
 	ddhp=dhp;
 	while(1)
 	{
-		cout<<endl<<"是否需要遊戲說明及技能介紹? | yes / no |"<<endl<<endl;
+		cout<<endl<<"是否需要遊戲說明及技能介紹? | [y]es / [n]o |"<<endl<<endl;
 		cin>>yn;
-		if(yn=="yes")
+		if(yn=="yes" || yn == "y")
 		{
 			this_thread::sleep_for(chrono::milliseconds(300));
 			cout<<endl;
@@ -103,7 +103,6 @@ int main()
 			this_thread::sleep_for(chrono::milliseconds(900));
 			cout<<"treat(回復 CD-14):"<<endl<<endl;
 			cout<<"\t接下來的3回合(包括當前回合)，回復已損生命之20%"<<endl<<endl;
-			system("pause");
 			cout<<endl;
 			cout<<"------------------------------------------------------------"<<endl;
 			system("pause");
@@ -116,7 +115,8 @@ int main()
 			cout<<"\t並有70%機率在當前回合定身惡龍"<<endl;
 			system("pause");
 			cout<<endl;
-			/*cout<<"------------------------------------------------------------"<<endl;
+			/*
+			cout<<"------------------------------------------------------------"<<endl;
 			cout<<"惡龍技能:"<<endl;
 			cout<<"弱化:"<<endl<<endl;
 			cout<<"\t接下來的三回合，勇者的攻擊力弱化30%，受到傷害提升10%"<<endl<<endl;
@@ -128,10 +128,11 @@ int main()
 			cout<<"\t該回合對勇者造成連續5次攻擊40%之傷害"<<endl<<endl;
 			cout<<"自爆:"<<endl<<endl;
 			cout<<"\t增加自身最大血量20%之護盾，若勇者在3回合內未能打掉護盾，勇者死亡"<<endl<<endl;
-			cout<<endl;*/
+			cout<<endl;
+			*/
 			break;
 		}
-		else if(yn=="no")
+		else if(yn=="no" || yn == "n")
 			break;
 		else
 			continue;
@@ -148,21 +149,21 @@ int main()
 		}
 		cout<<"攻擊: | +  atk|| ++  double atk|| -  defend|"<<endl;
 		cout<<"技能: "<<endl;
-			cout<<"| 1  "<<left<<setw(6)<<"freeze"<<" CD: "<<left<<setw(2)<<18-fre<<"/18"<<" |";
-			cout<<"| 2  "<<left<<setw(6)<<"fire"<<" CD: "<<left<<setw(2)<<8-fir<<"/8 "<<" |";
-			cout<<"| 3  "<<left<<setw(6)<<"swipe"<<" CD: "<<left<<setw(2)<<5-swi<<"/5 "<<" |";
+			cout<<white_text("| 1  ")<<left<<setw(6)<<"freeze"<<white_text(" CD: ")<<left<<setw(2)<<18-fre<<white_text("/18")<<white_text(" |");
+			cout<<white_text("| 2  ")<<left<<setw(6)<<"fire"<<white_text(" CD: ")<<left<<setw(2)<<8-fir<<white_text("/8 ")<<white_text(" |");
+			cout<<white_text("| 3  ")<<left<<setw(6)<<"swipe"<<white_text(" CD: ")<<left<<setw(2)<<5-swi<<white_text("/5 ")<<white_text(" |");
 			cout<<endl;
-			cout<<"| 4  "<<left<<setw(6)<<"dizzy"<<" CD: "<<left<<setw(2)<<13-diz<<"/13"<<" |";
-			cout<<"| 5  "<<left<<setw(6)<<"blood"<<" CD: "<<left<<setw(2)<<27-blo<<"/27"<<" |";
-			cout<<"| 6  "<<left<<setw(6)<<"shield"<<" CD: "<<left<<setw(2)<<16-shi<<"/16"<<" |";
+			cout<<white_text("| 4  ")<<left<<setw(6)<<"dizzy"<<white_text(" CD: ")<<left<<setw(2)<<13-diz<<white_text("/13")<<white_text(" |");
+			cout<<white_text("| 5  ")<<left<<setw(6)<<"blood"<<white_text(" CD: ")<<left<<setw(2)<<27-blo<<white_text("/27")<<white_text(" |");
+			cout<<white_text("| 6  ")<<left<<setw(6)<<"shield"<<white_text(" CD: ")<<left<<setw(2)<<16-shi<<white_text("/16")<<white_text(" |");
 			cout<<endl;
-			cout<<"| 7  "<<left<<setw(6)<<"cure"<<" CD: "<<left<<setw(2)<<20-cur<<"/20"<<" |";
-			cout<<"| 8  "<<left<<setw(6)<<"treat"<<" CD: "<<left<<setw(2)<<14-tre<<"/14"<<" |";
+			cout<<white_text("| 7  ")<<left<<setw(6)<<"cure"<<white_text(" CD: ")<<left<<setw(2)<<20-cur<<white_text("/20")<<white_text(" |");
+			cout<<white_text("| 8  ")<<left<<setw(6)<<"treat"<<white_text(" CD: ")<<left<<setw(2)<<14-tre<<white_text("/14")<<white_text(" |");
 		if(pow==1)
 			cout<<"| !   pow |";
 		cout<<endl<<endl;
-		cout<<"怒氣值: "<<ang<<endl<<endl;
-		cout<<"勇者血量:"<<yhp<<"/"<<hp<<"  惡龍血量:"<<dhp<<"/"<<ddhp<<endl<<endl;
+		cout<<white_text("怒氣值: ")<<ang<<endl<<endl;
+		cout<<white_text("勇者血量:")<<yhp<<white_text("/")<<hp<<white_text("  惡龍血量:")<<dhp<<white_text("/")<<ddhp<<endl<<endl;
 		// 各項技能CD判斷
 		if(freeze==0)
 		{
@@ -255,8 +256,10 @@ int main()
 			break;
 		}
 		rr=yatk*r; //計算勇者造成傷害
-		while(cin>>s) //使用者輸入指令與判斷
+		while(true) //使用者輸入指令與判斷
 		{
+		    cout << ">>>";
+		    cin>>s;
 			cout<<endl;
 			if(s=="+")
 			{
