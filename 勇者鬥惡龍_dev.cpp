@@ -18,7 +18,7 @@ int dragon_death_check(int dhp){
 	if(dhp==0)
 	    {
 			this_thread::sleep_for(chrono::milliseconds(700));
-			cout<<endl<<yellow_text("勇者擊敗了惡龍!");
+			cout<<endl<<red_text("勇者擊敗了惡龍!");
 			this_thread::sleep_for(chrono::milliseconds(300));
 			cout<<endl;
 			system("pause");
@@ -63,7 +63,7 @@ int main()
 			cout<<"------------------------------------------------------------"<<endl;
 			cout<<"遊戲方式:"<<endl;
 			this_thread::sleep_for(chrono::milliseconds(800));
-			cout<<"\t輸入技能之代號即可攻擊"<<endl<<endl;
+			cout<<yellow_text("\t輸入技能之代號或名稱即可攻擊")<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(800));
 			cout<<"\t普通攻擊: 造成基礎傷害乘以傷害係數的傷害"<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(800));
@@ -160,7 +160,7 @@ int main()
 			cout<<white_text("| 7  ")<<left<<setw(6)<<"cure"<<white_text(" CD: ")<<left<<setw(2)<<20-cur<<white_text("/20")<<white_text(" |");
 			cout<<white_text("| 8  ")<<left<<setw(6)<<"treat"<<white_text(" CD: ")<<left<<setw(2)<<14-tre<<white_text("/14")<<white_text(" |");
 		if(pow==1)
-			cout<<"| !   pow |";
+			cout<<yellow_text("| !   pow |");
 		cout<<endl<<endl;
 		cout<<white_text("怒氣值: ")<<ang<<endl<<endl;
 		cout<<white_text("勇者血量:")<<yhp<<white_text("/")<<hp<<white_text("  惡龍血量:")<<dhp<<white_text("/")<<ddhp<<endl<<endl;
@@ -333,7 +333,7 @@ int main()
 				de++;
 				break;
 			}
-			else if(freeze==1&&s=="1")
+			else if(freeze==1&& (s=="1" || s == "freeze") )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				freeze--;
@@ -342,7 +342,7 @@ int main()
 				fre=fre-18;
 				break;
 			}
-			else if(fire==1&&s=="2")
+			else if(fire==1&& (s=="2"|| s == "fire" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				fire--;
@@ -351,7 +351,7 @@ int main()
 	   			fir=fir-8;
 	   			break;
 			}
-			else if(swipe==1&&s=="3")
+			else if(swipe==1&& (s=="3"|| s == "swipe" ) )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				swipe--;
@@ -364,7 +364,7 @@ int main()
 				dragon_death_check(dhp);
 	    		break;
 			}
-			else if(dizzy==1&&s=="4")
+			else if(dizzy==1&&(s=="4"|| s == "dizzy" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				dizzy--;
@@ -373,7 +373,7 @@ int main()
 	   			diz=diz-13;
 	   			break;
 			}
-			else if(blood==1&&s=="5")
+			else if(blood==1&&( s=="5"|| s == "blood" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				blood--;
@@ -382,7 +382,7 @@ int main()
 	   			blo=blo-27;
 	   			break;
 			}
-			else if(shield==1&&s=="6")
+			else if(shield==1&&s=="6"|| s == "shield" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				shield--;
