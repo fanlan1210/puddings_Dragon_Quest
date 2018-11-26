@@ -258,7 +258,7 @@ int main()
 		rr=yatk*r; //計算勇者造成傷害
 		while(true) //使用者輸入指令與判斷
 		{
-		    cout << ">>>";
+		    cout << white_text(">>>");
 		    cin>>s;
 			cout<<endl;
 			if(s=="+")
