@@ -28,7 +28,7 @@ int dragon_death_check(int dhp){
 }
 int main()
 {
-	int yhp,yatk,dhp,datk,i,R,D,rr,ff=0,f,c=0,st=0,de=0;
+	int yyhp,yhp,yatk,dhp,datk,i,R,D,rr,ff=0,f,c=0,st=0,de=0;
 	int chp,hp,ddhp,dd=0,ii=0,cc=0,d=0,b=0,bhp,sh=0,ang=0;
 	int freeze=1,fire=1,swipe=1,dizzy=1,blood=1,shield=1,cure=1,treat=1,pow=0; //技能開關
 	int fre=18,fir=8,swi=5,diz=13,blo=27,shi=16,cur=20,tre=14; //Cool Down
@@ -74,6 +74,7 @@ int main()
 		dhp = 150;
 		datk = 10;
 	}
+	yyhp = yhp;
 	cout<<"------------------------------------------------------------"<<endl;
 	f=yatk*0.45;
 	hp=yhp;
@@ -601,7 +602,7 @@ int main()
 				if(R==4){
 					cout<<"惡龍使出"<<magenta_text("龍之吐息")<<"!";
 					cout<<"惡龍對勇者造成了 "<<yhp/10<<" 點傷害";
-					yhp = yhp - yhp / 10;
+					yhp = yhp - yyhp / 10;
 				}else{
 				if(sh==0&&de==1)
 				{
