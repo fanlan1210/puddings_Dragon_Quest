@@ -104,7 +104,7 @@ int main()
 			this_thread::sleep_for(chrono::milliseconds(300));
 			cout<<"------------------------------------------------------------"<<endl;
 			system("pause");
-			cout<<"技能介紹: (以下每個技能只能使用1次)"<<endl<<endl;
+			cout<<"技能介紹:"<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(900));
 			cout<<"freeze(冰凍 CD-18):"<<endl<<endl;
 			cout<<"\t冰凍惡龍3回合(包括當前回合)，使惡龍無法行動"<<endl<<endl;
@@ -145,6 +145,7 @@ int main()
 			cout<<"惡龍技能:"<<endl;
 			cout<<"龍之吐息:"<<endl<<endl;
 			cout<<"\t無視護盾效果，對勇者造成其最大生命值10%傷害"<<endl<<endl;
+			system("pause");
 			/*
 			cout<<"弱化:"<<endl<<endl;
 			cout<<"\t接下來的三回合，勇者的攻擊力弱化30%，受到傷害提升10%"<<endl<<endl;
