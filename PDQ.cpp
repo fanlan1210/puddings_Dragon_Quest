@@ -601,7 +601,7 @@ int main()
 				R=rand()%5;
 				if(R==4){
 					cout<<"惡龍使出"<<magenta_text("龍之吐息")<<"!";
-					cout<<"惡龍對勇者造成了 "<<yhp/10<<" 點傷害";
+					cout<<"惡龍對勇者造成了 "<<yyhp/10<<" 點傷害";
 					yhp = yhp - yyhp / 10;
 				}else{
 				if(sh==0&&de==1)
