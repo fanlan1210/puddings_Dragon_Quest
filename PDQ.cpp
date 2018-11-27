@@ -15,7 +15,7 @@ string cyan_text(string text){return "\033[0;96m" + text + "\033[0m";}
 string white_text(string text){return "\033[0;97m" + text + "\033[0m";}
 
 int dragon_death_check(int dhp){
-	if(dhp==0)
+	if(dhp<=0)
 	    {
 			this_thread::sleep_for(chrono::milliseconds(700));
 			cout<<endl<<red_text("勇者擊敗了惡龍!");
@@ -39,15 +39,41 @@ int main()
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 4.0.5 (dev)"<<endl<<endl;
-	cout<<white_text("勇者最大血量: ");
-	cin>>yhp;
-	cout<<endl<<white_text("勇者基礎攻擊力: ");
-	cin>>yatk;
-	cout<<endl<<white_text("惡龍最大血量: ");
-	cin>>dhp;
-	cout<<endl<<white_text("惡龍基礎攻擊力: ");
-	cin>>datk;
+	cout<<"Beta 5.0.0_DEV"<<endl<<endl;
+	int game_diffculty,cho;
+	cout<<"請選擇遊戲難度(0:自訂，簡單:1~困難:3)";
+	cin>>cho;
+	if(cho == 0){
+		cout<<white_text("勇者最大血量: ");
+		cin>>yhp;
+		cout<<endl<<white_text("勇者基礎攻擊力: ");
+		cin>>yatk;
+		cout<<endl<<white_text("惡龍最大血量: ");
+		cin>>dhp;
+		cout<<endl<<white_text("惡龍基礎攻擊力: ");
+		cin>>datk;
+	}
+	else if(cho == 1){
+		cout<<yellow_text("選擇為簡單難度")<<endl;
+		yhp = 300;
+		yatk = 5;
+		dhp = 100;
+		datk = 10;
+	}
+	else if(cho == 2){
+		cout<<yellow_text("選擇為普通難度")<<endl;
+		yhp = 200;
+		yatk = 5;
+		dhp = 100;
+		datk = 10;
+	}
+	else if(cho == 3){
+		cout<<yellow_text("選擇為困難難度")<<endl;
+		yhp = 100;
+		yatk = 5;
+		dhp = 150;
+		datk = 10;
+	}
 	cout<<"------------------------------------------------------------"<<endl;
 	f=yatk*0.45;
 	hp=yhp;
@@ -74,10 +100,10 @@ int main()
 			cout<<"\t傷害係數: 可能是0.90、0.95、1.00、1.05、1.10或1.80(暴擊)"<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(800));
 			cout<<"\t技能之冷卻時間(CD)到0即可再次使用該技能"<<endl;
-			system("pause");
 			cout<<endl;
-			cout<<"------------------------------------------------------------"<<endl;
 			this_thread::sleep_for(chrono::milliseconds(300));
+			cout<<"------------------------------------------------------------"<<endl;
+			system("pause");
 			cout<<"技能介紹: (以下每個技能只能使用1次)"<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(900));
 			cout<<"freeze(冰凍 CD-18):"<<endl<<endl;
@@ -115,9 +141,11 @@ int main()
 			cout<<"\t並有70%機率在當前回合定身惡龍"<<endl;
 			system("pause");
 			cout<<endl;
-			/*
 			cout<<"------------------------------------------------------------"<<endl;
 			cout<<"惡龍技能:"<<endl;
+			cout<<"龍之吐息:"<<endl<<endl;
+			cout<<"\t無視護盾效果，對勇者造成其最大生命值10%傷害"<<endl<<endl;
+			/*
 			cout<<"弱化:"<<endl<<endl;
 			cout<<"\t接下來的三回合，勇者的攻擊力弱化30%，受到傷害提升10%"<<endl<<endl;
 			cout<<"反彈:"<<endl<<endl;
@@ -269,8 +297,7 @@ int main()
 		    		cout<<"\a(暴擊!)"<<endl;
 		    	cout<<endl;
 	   			dhp=dhp-rr;
-	   			if(dhp<0)
-					dhp=0;
+
 				dragon_death_check(dhp);
 	   			break;
 			}
@@ -321,8 +348,7 @@ int main()
 		    		cout<<"\a(暴擊!)";
 		    	cout<<endl;
 	   			dhp=dhp-(rr/2);
-	   			if(dhp<0)
-					dhp=0;
+
 				dragon_death_check(dhp);
 	   			break;
 			}
@@ -359,8 +385,7 @@ int main()
 				cout<<"勇者對惡龍造成了 "<<yatk*3<<" 點傷害"<<endl;
 	    		dhp=dhp-(yatk*3);
 	    		swi=swi-5;
-	    		if(dhp<0)
-					dhp=0;
+
 				dragon_death_check(dhp);
 	    		break;
 			}
@@ -382,7 +407,7 @@ int main()
 	   			blo=blo-27;
 	   			break;
 			}
-			else if(shield==1&&s=="6"|| s == "shield" )
+			else if(shield==1&&( s=="6"|| s == "shield" ) )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				shield--;
@@ -391,7 +416,7 @@ int main()
 	   			shi=shi-16;
 	   			break;
 			}
-			else if(cure==1&&s=="7")
+			else if(cure==1&&(s=="7"|| s == "cure" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				cure--;
@@ -408,7 +433,7 @@ int main()
 				cur=cur-20;
 				break;
 			}
-			else if(treat==1&&s=="8")
+			else if(treat==1&&(s=="8"|| s == "treat"))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				treat--;
@@ -417,7 +442,7 @@ int main()
 				tre=tre-14;
 				break;
 			}
-			else if(pow==1&&s=="!")
+			else if(pow==1&& (s=="!"|| s == "pow"))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				pow--;
@@ -427,8 +452,7 @@ int main()
 				this_thread::sleep_for(chrono::milliseconds(800));
 				cout<<"勇者對惡龍造成了 "<<yatk*5<<" 點傷害"<<endl;
 	    		dhp=dhp-(yatk*5);
-	    		if(dhp<0)
-					dhp=0;
+
 				ang=ang-10;
 				this_thread::sleep_for(chrono::milliseconds(1200));
 				dragon_death_check(dhp);
@@ -468,8 +492,7 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				dhp=dhp-f;
-				if(dhp<0)
-					dhp=0;
+
 				cout<<endl;
 				cout<<"燃燒對惡龍造成了 "<<f<<" 點傷害"<<endl;
 				ii--;
@@ -500,8 +523,6 @@ int main()
 					yhp=hp;
 				}
 				dhp=dhp-bhp;
-				if(dhp<0)
-					dhp=0;
 				cout<<endl;
 				cout<<"勇者將惡龍的 "<<bhp<<" 點血量轉換成自己的血量"<<endl;
 				b--;
@@ -575,6 +596,12 @@ int main()
 			}
 			if(dd==0)
 			{
+				R=rand()%5;
+				if(R==4){
+					cout<<"惡龍使出"<<magenta_text("龍之吐息")<<"!";
+					cout<<"惡龍對勇者造成了 "<<yhp/10<<" 點傷害";
+					yhp = yhp - yhp / 10;
+				}else{
 				if(sh==0&&de==1)
 				{
 					cout<<"勇者防禦住了 "<<int(rr*0.6)<<" 點傷害"<<endl<<endl;
@@ -604,6 +631,7 @@ int main()
 				}
 				cout<<endl;
 				yhp=yhp-rr;
+				}
 			}
 			else if(dd==1)
 			{
