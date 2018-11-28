@@ -31,7 +31,7 @@ int main()
 	int hero_maxhp,hero_hp,hero_atk; //勇者數值
 	int dragon_hp,dragon_atk,dragon_maxhp; //惡龍數值
 	int i,R,D,rr,freezed=0,f,c=0,st=0,de=0;
-	int chp,hp,dd=0,burned=0,curing=0,d=0,b=0,bhp,sh=0,ap=0;
+	int chp,hp,dizzied=0,burned=0,curing=0,d=0,b=0,bhp,shielding=0,ap=0;
 	int freeze=1,fire=1,swipe=1,dizzy=1,blood=1,shield=1,cure=1,treat=1,pow=0; //技能開關
 	int freeze_cd=18,fire_cd=8,swipe_cd=5,dizzy_cd=13,blood_cd=27,shield_cd=16,\
 		cure_cd=20,treat_cd=14; //Cool Down
@@ -43,7 +43,7 @@ int main()
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
 	cout<<"Beta 5.1.0_DEV"<<endl<<endl;
-	int game_diffculty,cho;
+	int game_diffculty,choice;
 	cout<<"請選擇遊戲難度(0:自訂，簡單:1~困難:3)";
 	cin>>choice;
 	if(choice == 0){
@@ -293,7 +293,7 @@ int main()
 		while(true) //使用者輸入指令與判斷
 		{
 		    cout << white_text(">>>");
-		    cin>>s;
+		    cin>>action;
 			cout<<endl;
 			if(action=="+")
 			{
@@ -418,7 +418,7 @@ int main()
 				this_thread::sleep_for(chrono::milliseconds(900));
 				shield--;
 	   			cout<<"勇者使用了shield(護盾)"<<endl;
-	   			sh=3;
+	   			shielding=3;
 	   			shield_cd-=16;
 	   			break;
 			}
@@ -583,13 +583,13 @@ int main()
 				srand(time(NULL));
 				D=rand()%5;
 				this_thread::sleep_for(chrono::milliseconds(500));
-				if(s=="4")
+				if(action=="4")
 					cout<<endl;
 				switch(D)
 				{
 					case 0:
 					case 1:
-						dd=1;
+						dizzied=1;
 						cout<<"暈眩成功!"<<endl<<endl;
 						break;
 					case 2:
@@ -600,7 +600,7 @@ int main()
 				}
 				d--;
 			}
-			if(dd==0)
+			if(dizzied==0)
 			{
 				R=rand()%5;
 				if(R==4){
@@ -608,25 +608,25 @@ int main()
 					cout<<"惡龍對勇者造成了 "<<hero_maxhp/10<<" 點傷害";
 					hero_hp = hero_hp - hero_maxhp / 10;
 				}else{
-				if(sh==0&&de==1)
+				if(shielding==0&&de==1)
 				{
 					cout<<"勇者防禦住了 "<<int(rr*0.6)<<" 點傷害"<<endl<<endl;
 					rr=rr*0.4;
 					de--;
 				}
-				else if(sh>0&&de==0)
+				else if(shielding>0&&de==0)
 				{
 					cout<<"(護盾吸收了 "<<rr<<" 點傷害)"<<endl;
 					rr=0;
-					sh--;
+					shielding--;
 				}
-				else if(sh>0&&de==1)
+				else if(shielding>0&&de==1)
 				{
 					cout<<"勇者防禦住了 0 點傷害"<<endl<<endl;
 					de--;
 					cout<<"(護盾吸收了 "<<rr<<" 點傷害)"<<endl;
 					rr=0;
-					sh--;
+					shielding--;
 				}
 				cout<<"惡龍對勇者造成了 "<<rr<<" 點傷害";
 			    if(r==1.8)
@@ -639,9 +639,9 @@ int main()
 				hero_hp=hero_hp-rr;
 				}
 			}
-			else if(dd==1)
+			else if(dizzied==1)
 			{
-				dd--;
+				dizzied--;
 				cout<<"惡龍對自己造成了 "<<rr<<" 點傷害";
 			    if(r==1.8)
 			    {
@@ -694,7 +694,7 @@ int main()
 			this_thread::sleep_for(chrono::milliseconds(200));
 			cout<<"吸血效果將在下一回合結束時失效"<<endl<<endl;
 		}
-		if(sh==1)
+		if(shielding==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
 			cout<<"護盾效果將在下一回合結束時失效"<<endl<<endl;
