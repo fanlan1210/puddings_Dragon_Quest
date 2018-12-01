@@ -27,7 +27,7 @@ int dragon_death_check(int hp){
 		return 0;
 }
 int gain_hp_check(int* gain_hp,int* hp,int* max_hp){
-	if(hp>max_hp)
+	if(*hp > *max_hp)
 	{
 		*gain_hp = *max_hp-*hp;
 		*hp = *max_hp;
