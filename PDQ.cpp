@@ -1,6 +1,5 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <random>
 #include <chrono>
 #include <thread>
 #include <iomanip>
@@ -26,7 +25,9 @@ int dragon_death_check(int hp){
 	    }
 		return 0;
 }
+
 int gain_hp_check(int* gain_hp,int* hp,int* max_hp){
+	*hp += *gain_hp;
 	if(*hp > *max_hp)
 	{
 		*gain_hp += *max_hp-*hp;
@@ -37,6 +38,7 @@ int gain_hp_check(int* gain_hp,int* hp,int* max_hp){
 
 int main()
 {
+	/* 初始化 */
 	int hero_maxhp,hero_hp,hero_atk,defend=0,ap=0; //勇者數值
 	int dragon_hp,dragon_atk,dragon_maxhp; //惡龍數值
 	int round,random_num,damage,gain_hp,lost_hp; // 計算用數值
@@ -46,12 +48,16 @@ int main()
 	int dizzied=0,burned=0,freezed=0,curing=0,dizzing=0,sapping=0,shielding=0,stand=0; // 持續狀態
 	double damage_rate;
 	string action,yn;
+	/* 隨機亂數初始化 */
+	random_device rand_dev;
+	default_random_engine gen_rand( rand_dev() );
+
 	cout<<white_text(" ---------------")<<endl;
 	cout<<white_text("|★☆★☆★☆★☆|")<<endl;
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 5.2.0_DEV"<<endl<<endl;
+	cout<<"Beta 5.3.0_DEV"<<endl<<endl;
 	int game_diffculty,choice;
 	cout<<"請選擇遊戲難度(0:自訂，簡單:1~困難:3)";
 	cin>>choice;
@@ -67,28 +73,28 @@ int main()
 	}
 	else if(choice == 1){
 		cout<<yellow_text("選擇為簡單難度")<<endl;
-		hero_hp = 300;
-		hero_atk = 5;
-		dragon_hp = 100;
-		dragon_atk = 10;
+		hero_hp = 6000;
+		hero_atk = 100;
+		dragon_hp = 2000;
+		dragon_atk = 200;
 	}
 	else if(choice == 2){
 		cout<<yellow_text("選擇為普通難度")<<endl;
-		hero_hp = 200;
-		hero_atk = 5;
-		dragon_hp = 100;
-		dragon_atk = 10;
+		hero_hp = 4000;
+		hero_atk = 100;
+		dragon_hp = 2000;
+		dragon_atk = 200;
 	}
 	else if(choice == 3){
 		cout<<yellow_text("選擇為困難難度")<<endl;
-		hero_hp = 100;
-		hero_atk = 5;
-		dragon_hp = 150;
-		dragon_atk = 10;
+		hero_hp = 2000;
+		hero_atk = 100;
+		dragon_hp = 3000;
+		dragon_atk = 200;
 	}
 	cout<<"------------------------------------------------------------"<<endl;
 	hero_maxhp = hero_hp;
-	dragon_maxhp=dragon_hp;
+	dragon_maxhp = dragon_hp;
 	while(1)
 	{
 		cout<<endl<<"是否需要遊戲說明及技能介紹? | [y]es / [n]o |"<<endl<<endl;
@@ -186,8 +192,10 @@ int main()
 	   	cout<<"第 "<<round<<" 回合:"<<endl;
 		if(ap>=10&&pow==0)
 		{
-			pow++;
+			pow=true;
 		}
+		//cout<<"[DEBUG]origin random number: "<<gen_rand()<<endl; //隨機數debug生成顯示
+		//cout<<"[DEBUG]Random number: "<<random_num<<endl; //隨機數debug顯示
 		cout<<"攻擊: | +  atk|| ++  double atk|| -  defend|"<<endl;
 		cout<<"技能: "<<endl;
 			cout<<white_text("| 1  ")<<left<<setw(6)<<"freeze"<<white_text(" CD: ")<<left<<setw(2)<<18-freeze_cd<<white_text("/18")<<white_text(" |");
@@ -211,7 +219,7 @@ int main()
 			if(freeze_cd<18)
 				freeze_cd++;
 			else if(freeze_cd==18)
-				freeze++;
+				freeze=true;
 		}
 		if(fire==0)
 		{
@@ -225,77 +233,56 @@ int main()
 			if(swipe_cd<5)
 				swipe_cd++;
 			else if(swipe_cd==5)
-				swipe++;
+				swipe=true;
 		}
 		if(dizzy==0)
 		{
 			if(dizzy_cd<13)
 				dizzy_cd++;
 			else if(dizzy_cd==13)
-				dizzy++;
+				dizzy=true;
 		}
 		if(blood==0)
 		{
 			if(blood_cd<27)
 				blood_cd++;
 			else if(blood_cd==27)
-				blood++;
+				blood=true;
 		}
 		if(shield==0)
 		{
 			if(shield_cd<16)
 				shield_cd++;
 			else if(shield_cd==16)
-				shield++;
+				shield=true;
 		}
 		if(cure==0)
 		{
 			if(cure_cd<20)
 				cure_cd++;
 			else if(cure_cd==20)
-				cure++;
+				cure=true;
 		}
 		if(treat==0)
 		{
 			if(treat_cd<14)
 				treat_cd++;
 			else if(treat_cd==14)
-				treat++;
+				treat=true;
 		}
+
 		// 隨機傷害倍率
-		srand(time(NULL));
-		damage_rate=rand()%14;
-		damage_rate=0;
+		random_num=gen_rand()%14;
+		damage_rate=1;
 		action="";
-		switch(random_num)
-		{
-		case 0:
-		case 1:
-			damage_rate=0.9;
-			break;
-		case 2:
-		case 3:
-		case 4:
-			damage_rate=0.95;
-			break;
-		case 5:
-		case 6:
-		case 7:
-			damage_rate=1;
-			break;
-		case 8:
-		case 9:
-		case 10:
-			damage_rate=1.05;
-			break;
-		case 11:
-		case 12:
-			damage_rate=1.1;
-			break;
-		case 13:
-			damage_rate=1.8;
-			break;
-		}
+		//cout<<"[DEBUG]Random number: "<<random_num<<endl; //隨機數debug顯示
+		if( random_num == 1 ) { damage_rate=0.9; }
+		if( random_num == 4 ) { damage_rate=0.95; }
+		if( random_num == 10 ) { damage_rate=1.05; }
+		if( random_num == 12 ) { damage_rate=1.1; }
+		if( random_num == 13 ) { damage_rate=1.8; }
+		//cout<<"[DEBUG]Damage rate: "<<damage_rate<<endl; //傷害倍率debug顯示
+
 		damage=hero_atk*damage_rate; //計算勇者造成傷害
 		while(true) //使用者輸入指令與判斷
 		{
@@ -322,39 +309,15 @@ int main()
 		    		cout<<"\a(暴擊!)";
 		    	cout<<endl;
 	   			dragon_hp=dragon_hp-(damage/2);
-	   			srand(time(NULL)); //計算第二次勇者攻擊傷害值
-				damage_rate=rand()%14;
-				damage_rate=0;
+	   			 //計算第二次勇者攻擊傷害值
+				random_num=gen_rand()%14;
+				damage_rate=1;
 				this_thread::sleep_for(chrono::milliseconds(300));
-				switch(random_num)
-				{
-					case 0:
-					case 1:
-						damage_rate=0.9;
-						break;
-					case 2:
-					case 3:
-					case 4:
-						damage_rate=0.95;
-						break;
-					case 5:
-					case 6:
-					case 7:
-						damage_rate=1;
-						break;
-					case 8:
-					case 9:
-					case 10:
-						damage_rate=1.05;
-						break;
-					case 11:
-					case 12:
-						damage_rate=1.1;
-						break;
-					case 13:
-						damage_rate=1.8;
-						break;
-				}
+				if ( random_num == 1 ) { damage_rate=0.9; }
+				if( random_num == 4 ) { damage_rate=0.95; }
+				if( random_num == 10 ) { damage_rate=1.05; }
+				if( random_num == 12 ) { damage_rate=1.1; }
+				if( random_num == 13 ) { damage_rate=1.8; }
 				damage=hero_atk*damage_rate;
 				cout<<"勇者對惡龍造成了 "<<damage/2<<" 點傷害";
 				if(damage_rate==1.8)
@@ -436,12 +399,7 @@ int main()
 				cout<<"勇者使用了cure(治癒)"<<endl;
 				gain_hp=hero_maxhp*0.4;
 				cout<<endl;
-				hero_hp=hero_hp+gain_hp;
-				if(hero_hp>hero_maxhp)
-				{
-					gain_hp+=hero_maxhp-hero_hp;
-					hero_hp=hero_maxhp;
-				}
+				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
 				cout<<"勇者回復了 "<<gain_hp<<" 點生命"<<endl;
 				cure_cd-=20;
 				break;
@@ -469,30 +427,16 @@ int main()
 				ap=ap-10;
 				this_thread::sleep_for(chrono::milliseconds(1200));
 				dragon_death_check(dragon_hp);
-			    random_num=0;
-				srand(time(NULL));
-				random_num=rand()%10;
+
+				random_num=gen_rand()%10;
 				this_thread::sleep_for(chrono::milliseconds(500));
 				cout<<endl;
-				switch(random_num)
-				{
-					case 0:
-					case 1:
-					case 2:
-					case 3:
-					case 4:
-					case 5:
-					case 6:
-						stand=1;
-						cout<<"定身成功!"<<endl;
-						break;
-					case 7:
-					case 8:
-					case 9:
-						cout<<"定身失敗!"<<endl;
-						break;
+				if ( random_num == 6 ) {
+					 stand=1;
+					 cout<<"定身成功!"<<endl;
 				}
-	    		break;
+				else { cout<<"定身失敗!"<<endl; }
+				break;
 			}
 			else
 				cout<<"你輸入的文字並未屬於任何一項行動"<<endl<<endl;
@@ -515,7 +459,6 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				gain_hp=(hero_maxhp-hero_hp)*0.2;
-				hero_hp=hero_hp+gain_hp;
 				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
 				cout<<endl;
 				cout<<"勇者回復了 "<<gain_hp<<" 點血量"<<endl;
@@ -525,7 +468,6 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				gain_hp=dragon_hp*0.03;
-				hero_hp=hero_hp+gain_hp;
 				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
 				dragon_hp=dragon_hp-gain_hp;
 				cout<<endl;
@@ -540,38 +482,14 @@ int main()
 			stand=false;
 			continue;
 		}
-		srand(time(NULL));
-		damage_rate=rand()%14;
-		damage_rate=0;
-		switch(random_num)
-		{
-			case 0:
-			case 1:
-				damage_rate=0.9;
-				break;
-			case 2:
-			case 3:
-			case 4:
-				damage_rate=0.95;
-				break;
-			case 5:
-			case 6:
-			case 7:
-				damage_rate=1;
-				break;
-			case 8:
-			case 9:
-			case 10:
-				damage_rate=1.05;
-				break;
-			case 11:
-			case 12:
-				damage_rate=1.1;
-				break;
-			case 13:
-				damage_rate=1.8;
-				break;
-		}
+
+		random_num=gen_rand()%14;
+		damage_rate=1;
+		if ( random_num == 1 ) { damage_rate=0.9; }
+		if( random_num == 4 ) { damage_rate=0.95; }
+		if( random_num == 10 ) { damage_rate=1.05; }
+		if( random_num == 12 ) { damage_rate=1.1; }
+		if( random_num == 13 ) { damage_rate=1.8; }
 
 		/* 如果惡龍沒有處於冰凍狀態，才繼續惡龍的攻擊判斷 */
 		if(freezed==0)
@@ -581,8 +499,8 @@ int main()
 		   	if(dizzing>0)
 			{
 				random_num=0;
-				srand(time(NULL));
-				random_num=rand()%5;
+
+				random_num=gen_rand()%5;
 				this_thread::sleep_for(chrono::milliseconds(500));
 				if(action=="4")
 					cout<<endl;
@@ -603,8 +521,8 @@ int main()
 			}
 			if(dizzied==0)
 			{
-				damage_rate=rand()%5;
-				if(damage_rate==4){
+				random_num=gen_rand()%5;
+				if(random_num==4){
 					cout<<"惡龍使出"<<magenta_text("龍之吐息")<<"!";
 					cout<<"惡龍對勇者造成了 "<<hero_maxhp/10<<" 點傷害";
 					hero_hp = hero_hp - hero_maxhp / 10;
