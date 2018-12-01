@@ -23,9 +23,18 @@ int dragon_death_check(int hp){
 			cout<<endl;
 			system("pause");
 			exit(0);
-			return 0;
 	    }
+		return 0;
 }
+int gain_hp_check(int* gain_hp,int* hp,int* max_hp){
+	if(hp>max_hp)
+	{
+		*gain_hp = *max_hp-*hp;
+		*hp = *max_hp;
+	}
+	return 0;
+}
+
 int main()
 {
 	int hero_maxhp,hero_hp,hero_atk,defend=0,ap=0; //勇者數值
@@ -42,7 +51,7 @@ int main()
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 5.1.0_DEV"<<endl<<endl;
+	cout<<"Beta 5.2.0_DEV"<<endl<<endl;
 	int game_diffculty,choice;
 	cout<<"請選擇遊戲難度(0:自訂，簡單:1~困難:3)";
 	cin>>choice;
@@ -195,7 +204,7 @@ int main()
 			cout<<yellow_text("| !   pow |");
 		cout<<endl<<endl;
 		cout<<white_text("怒氣值: ")<<ap<<endl<<endl;
-		cout<<white_text("勇者血量:")<<hero_hp<<white_text("/")<<hp<<white_text("  惡龍血量:")<<dragon_hp<<white_text("/")<<dragon_maxhp<<endl<<endl;
+		cout<<white_text("勇者血量:")<<hero_hp<<white_text("/")<<hero_maxhp<<white_text("  惡龍血量:")<<dragon_hp<<white_text("/")<<dragon_maxhp<<endl<<endl;
 		// 各項技能CD判斷
 		if(freeze==0)
 		{
@@ -360,7 +369,7 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(600));
 				cout<<"(防禦)"<<endl;
-				de++;
+				defend++;
 				break;
 			}
 			else if(freeze==1&& ( action=="1" || action == "freeze") )
@@ -433,7 +442,7 @@ int main()
 					gain_hp+=hero_maxhp-hero_hp;
 					hero_hp=hero_maxhp;
 				}
-				cout<<"勇者回復了 "<<c<<" 點生命"<<endl;
+				cout<<"勇者回復了 "<<gain_hp<<" 點生命"<<endl;
 				cure_cd-=20;
 				break;
 			}
@@ -498,20 +507,16 @@ int main()
 				this_thread::sleep_for(chrono::milliseconds(900));
 				dragon_hp=dragon_hp-lost_hp;
 				cout<<endl;
-				cout<<"燃燒對惡龍造成了 "<<f<<" 點傷害"<<endl;
+				cout<<"燃燒對惡龍造成了 "<<lost_hp<<" 點傷害"<<endl;
 				burned--;
 				dragon_death_check(dragon_hp);
 			}
 			if(curing>0)
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				gain_hp=(hp-hero_hp)*0.2;
+				gain_hp=(hero_maxhp-hero_hp)*0.2;
 				hero_hp=hero_hp+gain_hp;
-				if(hero_hp>hp)
-				{
-					gain_hp=gain_hp+hp-hero_hp;
-					hero_hp=hp;
-				}
+				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
 				cout<<endl;
 				cout<<"勇者回復了 "<<gain_hp<<" 點血量"<<endl;
 				curing--;
@@ -521,11 +526,7 @@ int main()
 				this_thread::sleep_for(chrono::milliseconds(900));
 				gain_hp=dragon_hp*0.03;
 				hero_hp=hero_hp+gain_hp;
-				if(hero_hp>hp)
-				{
-					gain_hp=gain_hp+hp-hero_hp;
-					hero_hp=hp;
-				}
+				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
 				dragon_hp=dragon_hp-gain_hp;
 				cout<<endl;
 				cout<<"勇者將惡龍的 "<<gain_hp<<" 點血量轉換成自己的血量"<<endl;
