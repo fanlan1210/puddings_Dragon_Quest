@@ -30,7 +30,7 @@ int main()
 {
 	int hero_maxhp,hero_hp,hero_atk,defend=0,ap=0; //勇者數值
 	int dragon_hp,dragon_atk,dragon_maxhp; //惡龍數值
-	int round,random_num,damage,gain_hp; // int f; // 計算用數值
+	int round,random_num,damage,gain_hp,lost_hp; // 計算用數值
 	bool freeze=1,fire=1,swipe=1,dizzy=1,blood=1,shield=1,cure=1,treat=1,pow=0; //技能開關
 	int freeze_cd=18,fire_cd=8,swipe_cd=5,dizzy_cd=13,blood_cd=27,shield_cd=16,\
 		cure_cd=20,treat_cd=14; //Cool Down
@@ -78,7 +78,6 @@ int main()
 		dragon_atk = 10;
 	}
 	cout<<"------------------------------------------------------------"<<endl;
-	//f=hero_atk*0.45;
 	hero_maxhp = hero_hp;
 	dragon_maxhp=dragon_hp;
 	while(1)
@@ -475,7 +474,7 @@ int main()
 					case 4:
 					case 5:
 					case 6:
-						st++;
+						stand=1;
 						cout<<"定身成功!"<<endl;
 						break;
 					case 7:
@@ -495,9 +494,9 @@ int main()
 		{
 			if(burned>0)
 			{
+				lost_hp=hero_atk*0.45;
 				this_thread::sleep_for(chrono::milliseconds(900));
-				dragon_hp=dragon_hp-f;
-
+				dragon_hp=dragon_hp-lost_hp;
 				cout<<endl;
 				cout<<"燃燒對惡龍造成了 "<<f<<" 點傷害"<<endl;
 				burned--;
@@ -613,7 +612,7 @@ int main()
 				{
 					cout<<"勇者防禦住了 "<<int(damage*0.6)<<" 點傷害"<<endl<<endl;
 					damage=damage*0.4;
-					de--;
+					defend--;
 				}
 				else if(shielding>0&&defend==0)
 				{
@@ -624,7 +623,7 @@ int main()
 				else if(shielding>0&&defend==1)
 				{
 					cout<<"勇者防禦住了 0 點傷害"<<endl<<endl;
-					de--;
+					defend--;
 					cout<<"(護盾吸收了 "<<damage<<" 點傷害)"<<endl;
 					damage=0;
 					shielding--;
