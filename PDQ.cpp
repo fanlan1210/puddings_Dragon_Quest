@@ -58,7 +58,7 @@ int main()
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
 	cout<<"Beta 5.3.0_DEV"<<endl<<endl;
-	int game_diffculty,choice;
+	int choice;
 	cout<<"請選擇遊戲難度(0:自訂，簡單:1~困難:3)";
 	cin>>choice;
 	if(choice == 0){
@@ -194,8 +194,6 @@ int main()
 		{
 			pow=true;
 		}
-		//cout<<"[DEBUG]origin random number: "<<gen_rand()<<endl; //隨機數debug生成顯示
-		//cout<<"[DEBUG]Random number: "<<random_num<<endl; //隨機數debug顯示
 		cout<<"攻擊: | +  atk|| ++  double atk|| -  defend|"<<endl;
 		cout<<"技能: "<<endl;
 			cout<<white_text("| 1  ")<<left<<setw(6)<<"freeze"<<white_text(" CD: ")<<left<<setw(2)<<18-freeze_cd<<white_text("/18")<<white_text(" |");
@@ -226,7 +224,7 @@ int main()
 			if(fire_cd<8)
 				fire_cd++;
 			else if(fire_cd==8)
-				fire++;
+				fire=true;
 		}
 		if(swipe==0)
 		{
@@ -275,13 +273,11 @@ int main()
 		random_num=gen_rand()%14;
 		damage_rate=1;
 		action="";
-		//cout<<"[DEBUG]Random number: "<<random_num<<endl; //隨機數debug顯示
 		if( random_num == 1 ) { damage_rate=0.9; }
 		if( random_num == 4 ) { damage_rate=0.95; }
 		if( random_num == 10 ) { damage_rate=1.05; }
 		if( random_num == 12 ) { damage_rate=1.1; }
 		if( random_num == 13 ) { damage_rate=1.8; }
-		//cout<<"[DEBUG]Damage rate: "<<damage_rate<<endl; //傷害倍率debug顯示
 
 		damage=hero_atk*damage_rate; //計算勇者造成傷害
 		while(true) //使用者輸入指令與判斷
