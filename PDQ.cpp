@@ -77,7 +77,7 @@ int main()
 	int hero_maxhp,hero_hp,hero_atk,defend=0,ap=0; //勇者數值
 	int dragon_hp,dragon_atk,dragon_maxhp; //惡龍數值
 	int round,random_num,damage,gain_hp,lost_hp,batter_random[5]; // 計算用數值
-	bool freeze=1,fire=1,swipe=1,dizzy=1,blood=1,shield=1,cure=1,treat=1,pow=0; //勇者技能開關
+	bool freeze=true,fire=true,swipe=true,dizzy=true,blood=true,shield=true,cure=true,treat=true,pow=false; //勇者技能開關
 	int freeze_cd=18,fire_cd=9,swipe_cd=5,dizzy_cd=13,blood_cd=27,shield_cd=16,\
 		cure_cd=20,treat_cd=14; //Cool Down
 	int dizzied=0,burned=0,frozen=0,curing=0,dizzing=0,sapping=0,shielding=0,stand=0; // 惡龍持續狀態
@@ -127,7 +127,7 @@ int main()
 	cout<<"------------------------------------------------------------"<<endl;
 	hero_maxhp = hero_hp;
 	dragon_maxhp = dragon_hp;
-	while(1)
+	while(true)
 	{
 		cout<<endl<<"是否需要遊戲說明及技能介紹? | [y]es / [n]o |"<<endl<<endl;
 		cin>>yn;
@@ -220,7 +220,7 @@ int main()
 		cout<<endl<<"------------------------------------------------------------"<<endl;
 		/* 使用者介面 */
 	   	cout<<"第 "<<round<<" 回合:"<<endl;
-		if(ap>=10&&pow==0)
+		if(ap>=10&&pow==false)
 		{
 			pow=true;
 		}
@@ -236,62 +236,62 @@ int main()
         cout<<endl;
         cout<<white_text("| 7  ")<<left<<setw(6)<<"cure"<<white_text(" CD: ")<<left<<setw(2)<<20-cure_cd<<white_text("/20")<<white_text(" |");
         cout<<white_text("| 8  ")<<left<<setw(6)<<"treat"<<white_text(" CD: ")<<left<<setw(2)<<14-treat_cd<<white_text("/14")<<white_text(" |");
-		if(pow==1)
+		if(pow==true)
 			cout<<yellow_text("| !   pow |");
 		cout<<endl<<endl;
 		cout<<white_text("怒氣值: ")<<ap<<endl<<endl;
 		cout<<white_text("勇者血量:")<<hero_hp<<white_text("/")<<hero_maxhp<<white_text("  惡龍血量:")<<dragon_hp<<white_text("/")<<dragon_maxhp<<endl<<endl;
 		// 各項技能CD判斷
-		if(freeze==0)
+		if(freeze==false)
 		{
 			if(freeze_cd<18)
 				freeze_cd++;
 			else if(freeze_cd==18)
 				freeze=true;
 		}
-		if(fire==0)
+		if(fire==false)
 		{
 			if(fire_cd<9)
 				fire_cd++;
 			else if(fire_cd==9)
 				fire=true;
 		}
-		if(swipe==0)
+		if(swipe==false)
 		{
 			if(swipe_cd<5)
 				swipe_cd++;
 			else if(swipe_cd==5)
 				swipe=true;
 		}
-		if(dizzy==0)
+		if(dizzy==false)
 		{
 			if(dizzy_cd<13)
 				dizzy_cd++;
 			else if(dizzy_cd==13)
 				dizzy=true;
 		}
-		if(blood==0)
+		if(blood==false)
 		{
 			if(blood_cd<27)
 				blood_cd++;
 			else if(blood_cd==27)
 				blood=true;
 		}
-		if(shield==0)
+		if(shield==false)
 		{
 			if(shield_cd<16)
 				shield_cd++;
 			else if(shield_cd==16)
 				shield=true;
 		}
-		if(cure==0)
+		if(cure==false)
 		{
 			if(cure_cd<20)
 				cure_cd++;
 			else if(cure_cd==20)
 				cure=true;
 		}
-		if(treat==0)
+		if(treat==false)
 		{
 			if(treat_cd<14)
 				treat_cd++;
@@ -362,7 +362,7 @@ int main()
 				defend++;
 				break;
 			}
-			else if(freeze==1&& ( action=="1" || action == "freeze") )
+			else if(freeze==true&& ( action=="1" || action == "freeze") )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				freeze=false;
@@ -371,7 +371,7 @@ int main()
 				freeze_cd=freeze_cd-18;
 				break;
 			}
-			else if(fire==1&& ( action=="2" || action == "fire" ))
+			else if(fire==true&& ( action=="2" || action == "fire" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				fire=false;
@@ -380,7 +380,7 @@ int main()
 	   			fire_cd=fire_cd-8;
 	   			break;
 			}
-			else if(swipe==1&& ( action=="3" || action == "swipe" ) )
+			else if(swipe==true&& ( action=="3" || action == "swipe" ) )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				swipe=false;
@@ -392,7 +392,7 @@ int main()
 				dragon_death_check(dragon_hp);
 	    		break;
 			}
-			else if(dizzy==1&&( action=="4" || action == "dizzy" ))
+			else if(dizzy==true&&( action=="4" || action == "dizzy" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				dizzy=false;
@@ -401,7 +401,7 @@ int main()
 	   			dizzy_cd-=13;
 	   			break;
 			}
-			else if(blood==1&&( action=="5" || action == "blood" ))
+			else if(blood==true&&( action=="5" || action == "blood" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				blood=false;
@@ -410,7 +410,7 @@ int main()
 	   			blood_cd-=27;
 	   			break;
 			}
-			else if(shield==1&&( action=="6" || action == "shield" ) )
+			else if(shield==true&&( action=="6" || action == "shield" ) )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				shield=false;
@@ -419,7 +419,7 @@ int main()
 	   			shield_cd-=16;
 	   			break;
 			}
-			else if(cure==1&&( action=="7" || action == "cure" ))
+			else if(cure==true&&( action=="7" || action == "cure" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				cure=false;
@@ -431,7 +431,7 @@ int main()
 				cure_cd-=20;
 				break;
 			}
-			else if(treat==1&&(action=="8"|| action == "treat"))
+			else if(treat==true&&(action=="8"|| action == "treat"))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				treat=false;
@@ -440,7 +440,7 @@ int main()
 				treat_cd-=14;
 				break;
 			}
-			else if(pow==1&& (action=="!"|| action == "pow"))
+			else if(pow==true&& (action=="!"|| action == "pow"))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				pow=false;
