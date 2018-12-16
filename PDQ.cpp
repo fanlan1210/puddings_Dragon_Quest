@@ -4,14 +4,20 @@
 #include <thread>
 #include <iomanip>
 using namespace std;
+//改變文字狀態
+string blink_text(string text){return "\033[5m" + text + "\033[0m";}
+string bold_text(auto text){return string("\033[1m") + text + string("\033[0m");}
+string italic_text(auto text){return string("\033[3m") + text + string("\033[0m");}
 //改變文字顏色
-string red_text(string text){return "\033[0;91m" + text + "\033[0m";}
-string green_text(string text){return "\033[0;92m" + text + "\033[0m";}
-string yellow_text(string text){return "\033[0;93m" + text + "\033[0m";}
-string blue_text(string text){return "\033[0;94m" + text + "\033[0m";}
-string magenta_text(string text){return "\033[0;95m" + text + "\033[0m";}
-string cyan_text(string text){return "\033[0;96m" + text + "\033[0m";}
-string white_text(string text){return "\033[0;97m" + text + "\033[0m";}
+string black_text(auto text){return string("\033[30m") + text + string("\033[0m");}
+string dark_red_text(auto text){return string("\033[31m") + text + string("\033[0m");}
+string red_text(auto text){return string("\033[91m") + text + string("\033[0m");}
+string green_text(auto text){return string("\033[92m") + text + string("\033[0m");}
+string yellow_text(auto text){return string("\033[93m") + text + string("\033[0m");}
+string blue_text(auto text){return string("\033[94m") + text + string("\033[0m");}
+string magenta_text(auto text){return string("\033[95m") + text + string("\033[0m");}
+string cyan_text(auto text){return string("\033[96m") + text + string("\033[0m");}
+string white_text(auto text){return string("\033[97m") + text + string("\033[0m");}
 
 void dragon_death_check(int hp){
 	if(hp<=0)
@@ -78,7 +84,7 @@ int main()
 	int dragon_hp,dragon_atk,dragon_maxhp; //惡龍數值
 	int round,random_num,damage,gain_hp,lost_hp,batter_random[5]; // 計算用數值
 	bool freeze=1,fire=1,swipe=1,dizzy=1,blood=1,shield=1,cure=1,treat=1,pow=0; //勇者技能開關
-	int freeze_cd=18,fire_cd=9,swipe_cd=5,dizzy_cd=13,blood_cd=27,shield_cd=16,\
+	int freeze_cd=18,fire_cd=9,swipe_cd=5,dizzy_cd=13,blood_cd=27,shield_cd=16,
 		cure_cd=20,treat_cd=14; //Cool Down
 	int dizzied=0,burned=0,frozen=0,curing=0,dizzing=0,sapping=0,shielding=0,stand=0; // 惡龍持續狀態
     int weaken=0,reflect=0,poison=0; // 勇者持續狀態
@@ -92,7 +98,7 @@ int main()
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 6.0.1_DEV"<<endl<<endl;
+	cout<<"Beta 6.1.0_DEV"<<endl<<endl;
 	int choice;
 	cout<<"請選擇遊戲難度(0:新手 || 1:普通 || 2:困難 || 3:夢魘)"<<endl;
 	cin>>choice;
@@ -181,7 +187,7 @@ int main()
 			cout<<endl;
 			system("pause");
 			cout<<"------------------------------------------------------------"<<endl;
-			cout<<"怒氣值:"<<endl;
+			cout<<"怒氣值(AP):"<<endl;
 			this_thread::sleep_for(chrono::milliseconds(800));
 			cout<<"\t每回合加1，若惡龍該回合暴擊則再加1，到10則可以使用必殺技pow"<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(800));
@@ -217,7 +223,7 @@ int main()
 	}
 	for(round=1;round>0;round++)
 	{
-		cout<<endl<<"------------------------------------------------------------"<<endl;
+		cout<<endl<<white_text("------------------------------------------------------------")<<endl;
 		/* 使用者介面 */
 	   	cout<<"第 "<<round<<" 回合:"<<endl;
 		if(ap>=10&&pow==0)
@@ -226,21 +232,24 @@ int main()
 		}
 		cout<<"攻擊: | +  atk|| ++  double atk|| -  defend|"<<endl;
 		cout<<"技能: "<<endl;
-        cout<<white_text("| 1  ")<<left<<setw(6)<<"freeze"<<white_text(" CD: ")<<left<<setw(2)<<18-freeze_cd<<white_text("/18")<<white_text(" |");
-        cout<<white_text("| 2  ")<<left<<setw(6)<<"fire"<<white_text(" CD: ")<<left<<setw(2)<<9-fire_cd<<white_text("/9 ")<<white_text(" |");
-        cout<<white_text("| 3  ")<<left<<setw(6)<<"swipe"<<white_text(" CD: ")<<left<<setw(2)<<5-swipe_cd<<white_text("/5 ")<<white_text(" |");
+        cout<<white_text("| 1  ")<<left<<setw(15)<<cyan_text("freeze")<<white_text(" CD: ")<<left<<setw(2)<<18-freeze_cd<<white_text("/18 |");
+        cout<<white_text("| 2  ")<<left<<setw(15)<<red_text("fire")<<white_text(" CD: ")<<left<<setw(2)<<9-fire_cd<<white_text("/ 9 |");
+        cout<<white_text("| 3  ")<<left<<setw(15)<<yellow_text("swipe")<<white_text(" CD: ")<<left<<setw(2)<<5-swipe_cd<<white_text("/ 5 |");
         cout<<endl;
-        cout<<white_text("| 4  ")<<left<<setw(6)<<"dizzy"<<white_text(" CD: ")<<left<<setw(2)<<13-dizzy_cd<<white_text("/13")<<white_text(" |");
-        cout<<white_text("| 5  ")<<left<<setw(6)<<"blood"<<white_text(" CD: ")<<left<<setw(2)<<27-blood_cd<<white_text("/27")<<white_text(" |");
-        cout<<white_text("| 6  ")<<left<<setw(6)<<"shield"<<white_text(" CD: ")<<left<<setw(2)<<16-shield_cd<<white_text("/16")<<white_text(" |");
+        cout<<white_text("| 4  ")<<left<<setw(15)<<yellow_text("dizzy")<<white_text(" CD: ")<<left<<setw(2)<<13-dizzy_cd<<white_text("/13 |");
+        cout<<white_text("| 5  ")<<left<<setw(15)<<dark_red_text("blood")<<white_text(" CD: ")<<left<<setw(2)<<27-blood_cd<<white_text("/27 |");
+        cout<<white_text("| 6  ")<<left<<setw(15)<<white_text("shield")<<white_text(" CD: ")<<left<<setw(2)<<16-shield_cd<<white_text("/16 |");
         cout<<endl;
-        cout<<white_text("| 7  ")<<left<<setw(6)<<"cure"<<white_text(" CD: ")<<left<<setw(2)<<20-cure_cd<<white_text("/20")<<white_text(" |");
-        cout<<white_text("| 8  ")<<left<<setw(6)<<"treat"<<white_text(" CD: ")<<left<<setw(2)<<14-treat_cd<<white_text("/14")<<white_text(" |");
-		if(pow==1)
-			cout<<yellow_text("| !   pow |");
+        cout<<white_text("| 7  ")<<left<<setw(15)<<white_text("cure")<<white_text(" CD: ")<<left<<setw(2)<<20-cure_cd<<white_text("/20 |");
+        cout<<white_text("| 8  ")<<left<<setw(15)<<white_text("treat")<<white_text(" CD: ")<<left<<setw(2)<<14-treat_cd<<white_text("/14 |");
+		if (ap<10){
+		cout<<yellow_text("| !  ")<<left<<setw(15)<<yellow_text("pow")<<white_text(" AP: ")<<left<<setw(2)<<ap<<white_text("(10)|");
+		}else{
+		cout<<yellow_text("| !  ")<<left<<setw(23)<<blink_text((yellow_text("pow")))<<white_text(" AP: ")<<left<<setw(2)<<ap<<white_text("(10)|");
+		}
 		cout<<endl<<endl;
-		cout<<white_text("怒氣值: ")<<ap<<endl<<endl;
-		cout<<white_text("勇者血量:")<<hero_hp<<white_text("/")<<hero_maxhp<<white_text("  惡龍血量:")<<dragon_hp<<white_text("/")<<dragon_maxhp<<endl<<endl;
+		cout<<white_text("勇者血量:")<<red_text(to_string(hero_hp))<<white_text("/"+to_string(hero_maxhp))
+			<<white_text("  惡龍血量:")<<red_text(to_string(dragon_hp))<<white_text("/"+to_string(dragon_maxhp))<<endl<<endl;
 		// 各項技能CD判斷
 		if(freeze==0)
 		{
@@ -317,7 +326,7 @@ int main()
 			if(action=="+")
 			{
 				this_thread::sleep_for(chrono::milliseconds(600));
-				cout<<"勇者對惡龍造成了 "<<damage<<" 點傷害";
+				cout<<white_text("勇者對惡龍造成了 "+to_string(damage)+" 點傷害");
 				if(damage_rate==1.8)
 		    		cout<<"\a(暴擊!)"<<endl;
 		    	cout<<endl;
@@ -329,7 +338,7 @@ int main()
 			else if(action=="++")
 			{
 				this_thread::sleep_for(chrono::milliseconds(300));
-				cout<<"勇者對惡龍造成了 "<<damage/2<<" 點傷害";
+				cout<<white_text("勇者對惡龍造成了 " + to_string(damage/2) + " 點傷害");
 				if(damage_rate==1.8)
 		    		cout<<"\a(暴擊!)";
 		    	cout<<endl;
@@ -346,7 +355,7 @@ int main()
 				if(random_num==10) {damage_rate=1.8;}
 				damage=hero_atk*damage_rate;
 				if(weaken>0) {damage*=0.7;}
-				cout<<"勇者對惡龍造成了 "<<damage/2<<" 點傷害";
+				cout<<white_text("勇者對惡龍造成了 " + to_string(damage/2) + " 點傷害");
 				if(damage_rate==1.8)
 		    		cout<<"\a(暴擊!)";
 		    	cout<<endl<<endl;
@@ -367,7 +376,7 @@ int main()
 				this_thread::sleep_for(chrono::milliseconds(900));
 				freeze=false;
 				frozen=2;
-				cout<<"勇者使用了freeze(冰凍)"<<endl;
+				cout<<yellow_text("勇者使用了") + cyan_text("freeze(冰凍)")<<endl;
 				freeze_cd=freeze_cd-18;
 				break;
 			}
@@ -375,16 +384,16 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				fire=false;
-				cout<<"勇者使用了fire(燃燒)"<<endl;
+				cout<<yellow_text("勇者使用了") + red_text("fire(燃燒)")<<endl;
 	   			burned=5;
-	   			fire_cd=fire_cd-8;
+	   			fire_cd=fire_cd-9;
 	   			break;
 			}
 			else if(swipe==1&& ( action=="3" || action == "swipe" ) )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				swipe=false;
-	   			cout<<"\a勇者使用了swipe(重擊)"<<endl<<endl;
+	   			cout<<yellow_text("\a勇者使用了swipe(重擊)")<<endl<<endl;
 				cout<<"勇者對惡龍造成了 "<<hero_atk*3<<" 點傷害"<<endl;
 	    		dragon_hp=dragon_hp-(hero_atk*3);
 	    		swipe_cd-=5;
@@ -396,7 +405,7 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				dizzy=false;
-	   			cout<<"勇者使用了dizzy(暈眩)"<<endl;
+	   			cout<<yellow_text("勇者使用了dizzy(暈眩)")<<endl;
 	   			dizzing=4;
 	   			dizzy_cd-=13;
 	   			break;
@@ -405,7 +414,7 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				blood=false;
-	   			cout<<"勇者使用了blood(吸血)"<<endl;
+	   			cout<<yellow_text("勇者使用了") + dark_red_text("blood(吸血)")<<endl;
 	   			sapping=3;
 	   			blood_cd-=27;
 	   			break;
@@ -414,7 +423,7 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				shield=false;
-	   			cout<<"勇者使用了shield(護盾)"<<endl;
+	   			cout<<yellow_text("勇者使用了shield(護盾)")<<endl;
 	   			shielding=3;
 	   			shield_cd-=16;
 	   			break;
@@ -423,7 +432,7 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				cure=false;
-				cout<<"勇者使用了cure(治癒)"<<endl;
+				cout<<yellow_text("勇者使用了") +red_text("cure(治癒)")<<endl;
 				gain_hp=hero_maxhp*0.4;
 				cout<<endl;
 				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
@@ -435,7 +444,7 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				treat=false;
-				cout<<"勇者使用了treat(回復)"<<endl;
+				cout<<yellow_text("勇者使用了") + red_text("treat(回復)")<<endl;
 				curing=3;
 				treat_cd-=14;
 				break;
@@ -444,11 +453,11 @@ int main()
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				pow=false;
-				cout<<"勇者使用了pow(必殺技)"<<endl;
-				cout<<"!!!!!!!!!!!!!!!!!!!!!"<<endl;
+				cout<<yellow_text("勇者使用了pow(必殺技)")<<endl;
+				cout<<bold_text("!!!!!!!!!!!!!!!!!!!!!")<<endl;
 				cout<<"\a\a\a\a\a\a\a\a\a\a";
 				this_thread::sleep_for(chrono::milliseconds(800));
-				cout<<"勇者對惡龍造成了 "<<hero_atk*5<<" 點傷害"<<endl;
+				cout<<white_text("勇者對惡龍造成了 "+ to_string(hero_atk*5) +" 點傷害")<<endl;
 	    		dragon_hp=dragon_hp-(hero_atk*5);
 	    		if(reflect>0){ hero_hp -= reflect_damage(&reflect,hero_atk*5);}
 				ap=ap-10;
@@ -467,7 +476,7 @@ int main()
 			}
 			else
             {
-				cout<<"你輸入的文字並未屬於任何一項行動"<<endl<<endl;
+				cout<<italic_text("你輸入的文字並未屬於任何一項行動")<<endl<<endl;
 				continue;
 			}
 		}
@@ -479,7 +488,7 @@ int main()
 				this_thread::sleep_for(chrono::milliseconds(900));
 				dragon_hp=dragon_hp-lost_hp;
 				cout<<endl;
-				cout<<"燃燒對惡龍造成了 "<<lost_hp<<" 點傷害"<<endl;
+				cout<<italic_text("燃燒對惡龍造成了 "+to_string(lost_hp)+" 點傷害")<<endl;
 				if(reflect>0){ hero_hp -= reflect_damage(&reflect,damage);}
 				burned--;
 				dragon_death_check(dragon_hp);
@@ -490,7 +499,7 @@ int main()
 				gain_hp=(hero_maxhp-hero_hp)*0.2;
 				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
 				cout<<endl;
-				cout<<"勇者回復了 "<<gain_hp<<" 點血量"<<endl;
+				cout<<italic_text("勇者回復了 "+to_string(gain_hp)+" 點血量")<<endl;
 				curing--;
 			}
 			if(sapping>0)
@@ -500,7 +509,7 @@ int main()
 				gain_hp_check(&gain_hp,&hero_hp,&hero_maxhp);
 				dragon_hp=dragon_hp-gain_hp;
 				cout<<endl;
-				cout<<"勇者將惡龍的 "<<gain_hp<<" 點血量轉換成自己的血量"<<endl;
+				cout<<italic_text("勇者將惡龍的 "+to_string(gain_hp)+" 點血量轉換成自己的血量")<<endl;
 				sapping--;
 				dragon_death_check(dragon_hp);
 			}
@@ -557,20 +566,20 @@ int main()
 			{
 				random_num=gen_rand()%18;
 				if(random_num==0||random_num==1||random_num==2||random_num==3){
-					cout<<"惡龍使出"<<magenta_text("龍之吐息")<<"!"<<endl<<endl;
+					cout<<yellow_text("惡龍使出") + magenta_text("龍之吐息")<<"!"<<endl<<endl;
 					cout<<"惡龍對勇者造成了 "<<hero_maxhp/8<<" 點傷害"<<endl;
 					hero_hp = hero_hp - hero_maxhp / 8;
 				}else if(random_num==4||random_num==5){
-					cout<<"惡龍使出"<<red_text("弱化")<<endl;
+					cout<<yellow_text("惡龍使出") + red_text("弱化")<<endl;
 					weaken=3;
 				}else if(random_num==6||random_num==7){
-					cout<<"惡龍使出"<<cyan_text("反彈")<<endl;
+					cout<<yellow_text("惡龍使出") + cyan_text("反彈")<<endl;
 					reflect=2;
 				}else if(random_num==8||random_num==9){
-					cout<<"惡龍使出"<<green_text("毒氣")<<endl;
+					cout<<yellow_text("惡龍使出") + green_text("毒氣")<<endl;
 					poison=5;
 				}else if(random_num==10||random_num==11){
-					cout<<"惡龍使出"<<green_text("連擊")<<endl<<endl;
+					cout<<yellow_text("惡龍使出") + green_text("連擊")<<endl<<endl;
 					for(int i=0;i<5;i++)
                     {
                         random_num=gen_rand()%14;
@@ -582,10 +591,10 @@ int main()
                         if(random_num==10) {damage_rate=1.8;}
                         damage=dragon_atk*damage_rate*0.45;
                         hero_hp-=damage;
-                        cout<<"惡龍對勇者造成了 "<<damage<<" 點傷害"<<endl;
+                        cout<<white_text("惡龍對勇者造成了 " + to_string(damage) + " 點傷害")<<endl;
                     }
 				}else{
-                    cout<<"惡龍對勇者造成了 "<<damage<<" 點傷害";
+                    cout<<white_text("惡龍對勇者造成了 " + to_string(damage) + " 點傷害");
                     if(damage_rate==1.8)
                     {
                         cout<<"\a(暴擊!)"<<endl;
@@ -600,7 +609,7 @@ int main()
 			else if(dizzied==1)
 			{
 				dizzied--;
-				cout<<"惡龍對自己造成了 "<<damage<<" 點傷害";
+				cout<<italic_text("惡龍對自己造成了 "+to_string(damage)+" 點傷害");
 			    if(damage_rate==1.8)
 			    {
 			    	cout<<"\a(暴擊!)"<<endl;
@@ -617,7 +626,7 @@ int main()
 		    if(hero_hp<=0)
 		    {
 				this_thread::sleep_for(chrono::milliseconds(700));
-		    	cout<<endl<<cyan_text("勇者被惡龍擊敗了!");
+		    	cout<<endl<<dark_red_text("勇者被惡龍擊敗了!");
 				this_thread::sleep_for(chrono::milliseconds(500));
 				cout<<endl;
 				system("pause");
@@ -628,60 +637,60 @@ int main()
 		else if(frozen==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"惡龍將在下一回合解凍"<<endl<<endl;
+			cout<<bold_text("惡龍將在下一回合解凍")<<endl<<endl;
 			frozen--;
 		}
 		else
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"惡龍將在 "<<frozen<<" 回合後解凍"<<endl<<endl;
+			cout<<bold_text("惡龍將在 "+to_string(frozen)+" 回合後解凍")<<endl<<endl;
 			frozen--;
 		}
 		if(poison>0)
         {
-            cout<<"中毒對勇者造成了 "<<hero_atk*0.3<<" 點傷害"<<endl;
+            cout<<italic_text("中毒對勇者造成了 "+to_string( (int)(hero_atk*0.3) )+" 點傷害")<<endl;
             hero_hp=hero_hp-hero_atk*0.3;
             poison--;
         }
 		if(burned==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"燃燒效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("燃燒效果將在下一回合結束時失效")<<endl<<endl;
 		}
 		if(dizzing==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"暈眩效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("暈眩效果將在下一回合結束時失效")<<endl<<endl;
 		}
 		if(sapping==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"吸血效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("吸血效果將在下一回合結束時失效")<<endl<<endl;
 		}
 		if(shielding==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"護盾效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("護盾效果將在下一回合結束時失效")<<endl<<endl;
 		}
 		if(curing==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"回復效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("回復效果將在下一回合結束時失效")<<endl<<endl;
 		}
 		if(weaken==1)
         {
             this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"弱化效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("弱化效果將在下一回合結束時失效")<<endl<<endl;
         }
         if(reflect==1)
         {
             this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"反彈效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("反彈效果將在下一回合結束時失效")<<endl<<endl;
         }
         if(poison==1)
         {
             this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<"中毒效果將在下一回合結束時失效"<<endl<<endl;
+			cout<<bold_text("中毒效果將在下一回合結束時失效")<<endl<<endl;
         }
 		ap++;
 		this_thread::sleep_for(chrono::milliseconds(1500));
