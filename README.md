@@ -11,5 +11,5 @@
 * 請加上`-fconcepts`以成功進行編譯
 ##### 範例
 ```bash
-g++ g++ --std=c++14 -fconcepts PDQ.cpp
+g++ --std=c++14 -fconcepts PDQ.cpp
 ```
