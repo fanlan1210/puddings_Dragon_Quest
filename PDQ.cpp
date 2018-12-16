@@ -92,7 +92,7 @@ int main()
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 6.0.0_DEV"<<endl<<endl;
+	cout<<"Beta 6.0.1_DEV"<<endl<<endl;
 	int choice;
 	cout<<"請選擇遊戲難度(0:新手 || 1:普通 || 2:困難 || 3:夢魘)"<<endl;
 	cin>>choice;
@@ -320,7 +320,7 @@ int main()
 				cout<<"勇者對惡龍造成了 "<<damage<<" 點傷害";
 				if(damage_rate==1.8)
 		    		cout<<"\a(暴擊!)"<<endl;
-		    	cout<<endl<<endl;
+		    	cout<<endl;
 	   			dragon_hp=dragon_hp-damage;
 	   			if(reflect>0){ hero_hp -= reflect_damage(&reflect,damage);} //判斷惡龍是否使用反彈
 				dragon_death_check(dragon_hp);
@@ -528,7 +528,7 @@ int main()
 		if(frozen==0)
 		{
 			this_thread::sleep_for(chrono::milliseconds(900));
-		    damage=dragon_atk*damage_rate;
+		    damage=dragon_atk*damage_rate; //惡龍傷害計算
 		    if(weaken) {damage*=1.1;}
 		   	if(dizzing>0)
 			{
@@ -580,7 +580,9 @@ int main()
                         if(random_num==5||random_num==6||random_num==7) {damage_rate=1.05;}
                         if(random_num==8||random_num==9) {damage_rate=1.1;}
                         if(random_num==10) {damage_rate=1.8;}
-                        cout<<"惡龍對勇者造成了 "<<damage*damage_rate<<" 點傷害"<<endl;
+                        damage=dragon_atk*damage_rate*0.45;
+                        hero_hp-=damage;
+                        cout<<"惡龍對勇者造成了 "<<damage<<" 點傷害"<<endl;
                     }
 				}else{
                     cout<<"惡龍對勇者造成了 "<<damage<<" 點傷害";
@@ -637,7 +639,7 @@ int main()
 		}
 		if(poison>0)
         {
-            cout<<"中毒對勇者造成了 "<<hero_atk*0.3<<" 點傷害"<<endl<<endl;
+            cout<<"中毒對勇者造成了 "<<hero_atk*0.3<<" 點傷害"<<endl;
             hero_hp=hero_hp-hero_atk*0.3;
             poison--;
         }
