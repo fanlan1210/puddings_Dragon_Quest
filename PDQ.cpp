@@ -590,6 +590,7 @@ int main()
                         if(random_num==8||random_num==9) {damage_rate=1.1;}
                         if(random_num==10) {damage_rate=1.8;}
                         damage=dragon_atk*damage_rate*0.45;
+						def_check(&shielding,&defend,&damage);
                         hero_hp-=damage;
                         cout<<white_text("惡龍對勇者造成了 " + to_string(damage) + " 點傷害")<<endl;
                     }
