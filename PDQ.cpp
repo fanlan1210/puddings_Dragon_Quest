@@ -127,7 +127,7 @@ int main()
 	cout<<"------------------------------------------------------------"<<endl;
 	hero_maxhp = hero_hp;
 	dragon_maxhp = dragon_hp;
-	while(1)
+	while(true)
 	{
 		cout<<endl<<"是否需要遊戲說明及技能介紹? | [y]es / [n]o |"<<endl<<endl;
 		cin>>yn;
