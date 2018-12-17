@@ -9,15 +9,15 @@ string blink_text(string text){return "\033[5m" + text + "\033[0m";}
 string bold_text(auto text){return string("\033[1m") + text + string("\033[0m");}
 string italic_text(auto text){return string("\033[3m") + text + string("\033[0m");}
 //改變文字顏色
-string black_text(auto text){return string("\033[30m") + text + string("\033[0m");}
-string dark_red_text(auto text){return string("\033[31m") + text + string("\033[0m");}
-string red_text(auto text){return string("\033[91m") + text + string("\033[0m");}
-string green_text(auto text){return string("\033[92m") + text + string("\033[0m");}
-string yellow_text(auto text){return string("\033[93m") + text + string("\033[0m");}
-string blue_text(auto text){return string("\033[94m") + text + string("\033[0m");}
-string magenta_text(auto text){return string("\033[95m") + text + string("\033[0m");}
-string cyan_text(auto text){return string("\033[96m") + text + string("\033[0m");}
-string white_text(auto text){return string("\033[97m") + text + string("\033[0m");}
+string black_text(auto text){return string("\033[38;5;00m") + text + string("\033[0m");}
+string dark_red_text(auto text){return string("\033[38;5;01m") + text + string("\033[0m");}
+string red_text(auto text){return string("\033[38;5;09m") + text + string("\033[0m");}
+string green_text(auto text){return string("\033[38;5;10m") + text + string("\033[0m");}
+string yellow_text(auto text){return string("\033[38;5;11m") + text + string("\033[0m");}
+string blue_text(auto text){return string("\033[38;5;12m") + text + string("\033[0m");}
+string magenta_text(auto text){return string("\033[38;5;13m") + text + string("\033[0m");}
+string cyan_text(auto text){return string("\033[38;5;14m") + text + string("\033[0m");}
+string white_text(auto text){return string("\033[38;5;15m") + text + string("\033[0m");}
 
 void dragon_death_check(int hp){
 	if(hp<=0)
@@ -98,7 +98,7 @@ int main()
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 6.2.0_DEV"<<endl<<endl;
+	cout<<"Beta 6.2.1_DEV"<<endl<<endl;
 	int choice;
 	cout<<"請選擇遊戲難度(0:新手 || 1:普通 || 2:困難 || 3:夢魘)"<<endl;
 	cin>>choice;
@@ -232,20 +232,20 @@ int main()
 		}
 		cout<<"攻擊: | +  atk|| ++  double atk|| -  defend|"<<endl;
 		cout<<"技能: "<<endl;
-        cout<<white_text("| 1  ")<<left<<setw(15)<<cyan_text("freeze")<<white_text(" CD: ")<<left<<setw(2)<<18-freeze_cd<<white_text("/18 |");
-        cout<<white_text("| 2  ")<<left<<setw(15)<<red_text("fire")<<white_text(" CD: ")<<left<<setw(2)<<9-fire_cd<<white_text("/ 9 |");
-        cout<<white_text("| 3  ")<<left<<setw(15)<<yellow_text("swipe")<<white_text(" CD: ")<<left<<setw(2)<<5-swipe_cd<<white_text("/ 5 |");
+        cout<<white_text("| 1  ")<<left<<setw(20)<<cyan_text("freeze")<<white_text(" CD: ")<<left<<setw(2)<<18-freeze_cd<<white_text("/18 |");
+        cout<<white_text("| 2  ")<<left<<setw(20)<<red_text("fire")<<white_text(" CD: ")<<left<<setw(2)<<9-fire_cd<<white_text("/ 9 |");
+        cout<<white_text("| 3  ")<<left<<setw(20)<<yellow_text("swipe")<<white_text(" CD: ")<<left<<setw(2)<<5-swipe_cd<<white_text("/ 5 |");
         cout<<endl;
-        cout<<white_text("| 4  ")<<left<<setw(15)<<yellow_text("dizzy")<<white_text(" CD: ")<<left<<setw(2)<<13-dizzy_cd<<white_text("/13 |");
-        cout<<white_text("| 5  ")<<left<<setw(15)<<dark_red_text("blood")<<white_text(" CD: ")<<left<<setw(2)<<27-blood_cd<<white_text("/27 |");
-        cout<<white_text("| 6  ")<<left<<setw(15)<<white_text("shield")<<white_text(" CD: ")<<left<<setw(2)<<16-shield_cd<<white_text("/16 |");
+        cout<<white_text("| 4  ")<<left<<setw(20)<<yellow_text("dizzy")<<white_text(" CD: ")<<left<<setw(2)<<13-dizzy_cd<<white_text("/13 |");
+        cout<<white_text("| 5  ")<<left<<setw(20)<<dark_red_text("blood")<<white_text(" CD: ")<<left<<setw(2)<<27-blood_cd<<white_text("/27 |");
+        cout<<white_text("| 6  ")<<left<<setw(20)<<white_text("shield")<<white_text(" CD: ")<<left<<setw(2)<<16-shield_cd<<white_text("/16 |");
         cout<<endl;
-        cout<<white_text("| 7  ")<<left<<setw(15)<<white_text("cure")<<white_text(" CD: ")<<left<<setw(2)<<20-cure_cd<<white_text("/20 |");
-        cout<<white_text("| 8  ")<<left<<setw(15)<<white_text("treat")<<white_text(" CD: ")<<left<<setw(2)<<14-treat_cd<<white_text("/14 |");
+        cout<<white_text("| 7  ")<<left<<setw(20)<<white_text("cure")<<white_text(" CD: ")<<left<<setw(2)<<20-cure_cd<<white_text("/20 |");
+        cout<<white_text("| 8  ")<<left<<setw(20)<<white_text("treat")<<white_text(" CD: ")<<left<<setw(2)<<14-treat_cd<<white_text("/14 |");
 		if (ap<10){
-		cout<<yellow_text("| !  ")<<left<<setw(15)<<yellow_text("pow")<<white_text(" AP: ")<<left<<setw(2)<<ap<<white_text("(10)|");
+		cout<<yellow_text("| !  ")<<left<<setw(20)<<yellow_text("pow")<<white_text(" AP: ")<<left<<setw(2)<<ap<<white_text("(10)|");
 		}else{
-		cout<<yellow_text("| !  ")<<left<<setw(23)<<blink_text((yellow_text("pow")))<<white_text(" AP: ")<<left<<setw(2)<<ap<<white_text("(10)|");
+		cout<<yellow_text("| !  ")<<left<<setw(28)<<blink_text(yellow_text("pow"))<<white_text(" AP: ")<<left<<setw(2)<<ap<<white_text("(10)|");
 		}
 		cout<<endl<<endl;
 		cout<<white_text("勇者血量:")<<red_text(to_string(hero_hp))<<white_text("/"+to_string(hero_maxhp))
