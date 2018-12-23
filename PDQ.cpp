@@ -6,7 +6,7 @@
 using namespace std;
 //改變文字狀態
 string blink_text(string text){return "\033[5m" + text + "\033[25m";}
-string bold_text(auto text){return string("\033[1m") + text + string("\033[21m");}
+string bold_text(auto text){return string("\033[1m") + text + string("\033[22m");}
 string italic_text(auto text){return string("\033[3m") + text + string("\033[23m");}
 //改變文字顏色
 string black_text(auto text){return string("\033[38;5;00m") + text + string("\033[37m");}
@@ -24,7 +24,7 @@ string custom_text(auto text,int color=7){
 	}
 void custom_background(bool status,int color=0){
 	if (status == true) cout<<string("\033[48;5;"+to_string(color)+"m");
-	else cout<<string("\033[0m");
+	else cout<<string("\033[48;5;0m");
 }
 
 
