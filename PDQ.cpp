@@ -108,7 +108,7 @@ int main()
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 6.1.2_DEV"<<endl<<endl;
+	cout<<"Beta 6.1.3_DEV"<<endl<<endl;
 	int choice;
 	cout<<"請選擇遊戲難度(0:新手 || 1:普通 || 2:困難 || 3:夢魘)"<<endl;
 	cin>>choice;
@@ -121,24 +121,24 @@ int main()
 	}
 	else if(choice == 1){
 		cout<<yellow_text("選擇為普通難度")<<endl;
-		hero_hp = 3000;
-		hero_atk = 400;
-		dragon_hp = 6000;
-		dragon_atk = 400;
+		hero_hp = 3500;
+		hero_atk = 500;
+		dragon_hp = 8000;
+		dragon_atk = 250;
 	}
 	else if(choice == 2){
 		cout<<yellow_text("選擇為困難難度")<<endl;
-		hero_hp = 2500;
-		hero_atk = 300;
-		dragon_hp = 7000;
-		dragon_atk = 400;
+		hero_hp = 3000;
+		hero_atk = 500;
+		dragon_hp = 10000;
+		dragon_atk = 300;
 	}
 	else if(choice == 3){
 		cout<<yellow_text("選擇為夢魘難度")<<endl;
-		hero_hp = 2000;
-		hero_atk = 200;
-		dragon_hp = 8000;
-		dragon_atk = 400;
+		hero_hp = 2500;
+		hero_atk = 400;
+		dragon_hp = 12000;
+		dragon_atk = 300;
 	}
 	cout<<"------------------------------------------------------------"<<endl;
 	hero_maxhp = hero_hp;
@@ -211,11 +211,11 @@ int main()
 			cout<<"龍之吐息:"<<endl<<endl;
 			cout<<"\t無視防禦及護盾效果，對勇者造成其最大生命值8%傷害"<<endl<<endl;
 			cout<<"弱化:"<<endl<<endl;
-			cout<<"\t接下來的三回合，勇者的攻擊力弱化30%，受到傷害提升10%"<<endl<<endl;
+			cout<<"\t接下來的3回合，勇者的攻擊力弱化30%，受到傷害提升10%"<<endl<<endl;
 			cout<<"反彈:"<<endl<<endl;
-			cout<<"\t接下來的第一回合，反彈勇者的攻擊傷害之40%，第二回合的反彈傷害為2倍"<<endl<<endl;
+			cout<<"\t下一回合，反彈勇者的攻擊傷害之40%，再下一回合反彈2倍傷害"<<endl<<endl;
 			cout<<"毒氣:"<<endl<<endl;
-			cout<<"\t接下來的5回合，對勇者造成攻擊30%之傷害，中毒傷害無視防禦及護盾效果"<<endl<<endl;
+			cout<<"\t接下來的5回合(包括當前回合)，對勇者造成攻擊30%之傷害，中毒傷害無視防禦及護盾效果"<<endl<<endl;
 			cout<<"連擊:"<<endl<<endl;
 			cout<<"\t該回合對勇者造成連續5次惡龍攻擊力45%之傷害"<<endl<<endl;
 			/*cout<<"自爆:"<<endl<<endl;
@@ -659,8 +659,8 @@ int main()
 		}
 		if(poison>0)
         {
-            cout<<italic_text("中毒對勇者造成了 "+to_string( (int)(hero_atk*0.3) )+" 點傷害")<<endl;
-            hero_hp=hero_hp-hero_atk*0.3;
+            cout<<italic_text("中毒對勇者造成了 "+to_string( (int)(dragon_atk*0.3) )+" 點傷害")<<endl;
+            hero_hp-=dragon_atk*0.3;
             poison--;
         }
 		if(burned==1)
