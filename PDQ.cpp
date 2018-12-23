@@ -19,6 +19,15 @@ string magenta_text(auto text){return string("\033[38;5;13m") + text + string("\
 string cyan_text(auto text){return string("\033[38;5;14m") + text + string("\033[0m");}
 string white_text(auto text){return string("\033[38;5;15m") + text + string("\033[0m");}
 
+string custom_text(auto text,int color=7){
+	return string("\033[38;5;"+to_string(color)+"m") + text + string("\033[0m");
+	}
+void custom_background(bool status,int color=0){
+	if (status == true) cout<<string("\033[48;5;"+to_string(color)+"m");
+	else cout<<string("\033[0m");
+}
+
+
 void dragon_death_check(int hp){
 	if(hp<=0)
     {
@@ -93,12 +102,13 @@ int main()
 	/* 隨機亂數初始化 */
 	random_device rand_dev;
 	default_random_engine gen_rand(rand_dev());
+	custom_background(true);
 	cout<<white_text(" ---------------")<<endl;
 	cout<<white_text("|★☆★☆★☆★☆|")<<endl;
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 6.1.1_DEV"<<endl<<endl;
+	cout<<"Beta 6.1.2_DEV"<<endl<<endl;
 	int choice;
 	cout<<"請選擇遊戲難度(0:新手 || 1:普通 || 2:困難 || 3:夢魘)"<<endl;
 	cin>>choice;
