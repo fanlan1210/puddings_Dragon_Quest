@@ -9,18 +9,18 @@ string blink_text(string text){return "\033[5m" + text + "\033[25m";}
 string bold_text(auto text){return string("\033[1m") + text + string("\033[21m");}
 string italic_text(auto text){return string("\033[3m") + text + string("\033[23m");}
 //改變文字顏色
-string black_text(auto text){return string("\033[38;5;00m") + text + string("\033[39m");}
-string dark_red_text(auto text){return string("\033[38;5;01m") + text + string("\033[39m");}
-string red_text(auto text){return string("\033[38;5;09m") + text + string("\033[39m");}
-string green_text(auto text){return string("\033[38;5;10m") + text + string("\033[39m");}
-string yellow_text(auto text){return string("\033[38;5;11m") + text + string("\033[39m");}
-string blue_text(auto text){return string("\033[38;5;12m") + text + string("\033[39m");}
-string magenta_text(auto text){return string("\033[38;5;13m") + text + string("\033[39m");}
-string cyan_text(auto text){return string("\033[38;5;14m") + text + string("\033[39m");}
-string white_text(auto text){return string("\033[38;5;15m") + text + string("\033[39m");}
+string black_text(auto text){return string("\033[38;5;00m") + text + string("\033[37m");}
+string dark_red_text(auto text){return string("\033[38;5;01m") + text + string("\033[37m");}
+string red_text(auto text){return string("\033[38;5;09m") + text + string("\033[37m");}
+string green_text(auto text){return string("\033[38;5;10m") + text + string("\033[37m");}
+string yellow_text(auto text){return string("\033[38;5;11m") + text + string("\033[37m");}
+string blue_text(auto text){return string("\033[38;5;12m") + text + string("\033[37m");}
+string magenta_text(auto text){return string("\033[38;5;13m") + text + string("\033[37m");}
+string cyan_text(auto text){return string("\033[38;5;14m") + text + string("\033[37m");}
+string white_text(auto text){return string("\033[38;5;15m") + text + string("\033[37m");}
 
 string custom_text(auto text,int color=7){
-	return string("\033[38;5;"+to_string(color)+"m") + text + string("\033[39m");
+	return string("\033[38;5;"+to_string(color)+"m") + text + string("\033[37m");
 	}
 void custom_background(bool status,int color=0){
 	if (status == true) cout<<string("\033[48;5;"+to_string(color)+"m");
