@@ -27,6 +27,13 @@ void custom_background(bool status,int color=0){
 	else cout<<string("\033[48;5;0m");
 }
 
+void pause()
+{
+    cin.clear();
+    cin.sync();
+    cout << "Press Enter to continue ...";
+    cin.get();
+}
 
 void dragon_death_check(int hp){
 	if(hp<=0)
@@ -35,7 +42,7 @@ void dragon_death_check(int hp){
         cout<<endl<<red_text("勇者擊敗了惡龍!");
         this_thread::sleep_for(chrono::milliseconds(300));
         cout<<endl;
-        system("pause");
+        pause();
         exit(0);
     }
 }
@@ -108,7 +115,7 @@ int main()
 	cout<<white_text("|勇者鬥惡龍|")<<endl;
 	cout<<white_text("|☆★☆★☆★☆★|")<<endl;
 	cout<<white_text(" ---------------")<<endl;
-	cout<<"Beta 6.1.3_DEV"<<endl<<endl;
+	cout<<"Beta 6.1.4_DEV"<<endl<<endl;
 	int choice;
 	cout<<"請選擇遊戲難度(0:新手 || 1:普通 || 2:困難 || 3:夢魘)"<<endl;
 	cin>>choice;
@@ -168,7 +175,7 @@ int main()
 			cout<<endl;
 			this_thread::sleep_for(chrono::milliseconds(300));
 			cout<<"------------------------------------------------------------"<<endl;
-			system("pause");
+			pause();
 			cout<<"技能介紹:"<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(900));
 			cout<<"freeze(冰凍 CD-18):"<<endl<<endl;
@@ -195,7 +202,7 @@ int main()
 			cout<<"treat(回復 CD-14):"<<endl<<endl;
 			cout<<"\t接下來的3回合(包括當前回合)，回復已損生命之20%"<<endl<<endl;
 			cout<<endl;
-			system("pause");
+			pause();
 			cout<<"------------------------------------------------------------"<<endl;
 			cout<<"怒氣值(AP):"<<endl;
 			this_thread::sleep_for(chrono::milliseconds(800));
@@ -205,7 +212,7 @@ int main()
 			cout<<"\t使用後怒氣值減10，該回合對惡龍造成攻擊力5倍之傷害，"<<endl;
 			cout<<"\t並有70%機率在當前回合定身惡龍"<<endl<<endl;
 			cout<<endl;
-			system("pause");
+			pause();
 			cout<<"------------------------------------------------------------"<<endl;
 			cout<<"惡龍技能:"<<endl;
 			cout<<"龍之吐息:"<<endl<<endl;
@@ -223,7 +230,7 @@ int main()
 			cout<<endl;
 			*/
 			this_thread::sleep_for(chrono::milliseconds(1000));
-			system("pause");
+			pause();
 			break;
 		}
 		else if(yn=="no" || yn == "n")
@@ -640,7 +647,7 @@ int main()
 		    	cout<<endl<<dark_red_text("勇者被惡龍擊敗了!");
 				this_thread::sleep_for(chrono::milliseconds(500));
 				cout<<endl;
-				system("pause");
+				pause();
 				return 0;
 		    }
 		    cout<<endl;
