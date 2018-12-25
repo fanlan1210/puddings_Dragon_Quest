@@ -29,8 +29,8 @@ void custom_background(bool status,int color=0){
 
 void pause()
 {
+	cin.sync();
     cin.clear();
-    cin.sync();
     cout << "Press Enter to continue ...";
     cin.get();
 }
