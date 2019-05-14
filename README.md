@@ -8,9 +8,8 @@
 
 其他資訊可查詢[wiki](https://github.com/fanlan1210/puddings_Dragon_Quest/wiki)
 #### 編譯
-* 支援C++14及更新版本
-* 請加上`-fconcepts`以成功進行編譯
+* 支援C++11及以上版本
 ##### 範例
 ```bash
-g++ --std=c++14 -fconcepts PDQ.cpp
+g++ --std=c++11 PDQ.cpp
 ```
