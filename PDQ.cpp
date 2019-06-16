@@ -5,7 +5,7 @@
 #include <iomanip>
 using namespace std;
 //版本資訊
-string version(){return "Beta 6.2.1_DEV";}
+string version(){return "Beta 6.2.2_DEV";}
 //改變文字狀態
 string blink_text(string text){return "\033[5m" + text + "\033[25m";}
 string bold_text(string text){return "\033[1m" + text + "\033[22m";}
@@ -139,30 +139,41 @@ int main()
 	cout<<white_text(" ---------------")<<endl;
 	cout<<version()<<endl<<endl;
 	int choice;
-	cout<<"請選擇遊戲難度(0:新手 || 1:普通 || 2:困難 || 3:夢魘)"<<endl;
+	cout<<"請選擇遊戲難度(1:新手 || 2:普通 || 3:困難 || 4:夢魘)"<<endl;
 	cin>>choice;
-	if(choice == 0){
+	if (choice == 0){
+		cout<<yellow_text("[DEBUG]選擇為自訂難度")<<endl;
+		cout<<white_text("勇者最大血量: ");
+		cin>>hero_hp;
+		cout<<endl<<white_text("勇者基礎攻擊力: ");
+		cin>>hero_atk;
+		cout<<endl<<white_text("惡龍最大血量: ");
+		cin>>dragon_hp;
+		cout<<endl<<white_text("惡龍基礎攻擊力: ");
+		cin>>dragon_atk;
+	}
+	else if(choice == 1){
 		cout<<yellow_text("選擇為新手難度")<<endl;
 		hero_hp = 4000;
 		hero_atk = 600;
 		dragon_hp = 4000;
 		dragon_atk = 200;
 	}
-	else if(choice == 1){
+	else if(choice == 2){
 		cout<<yellow_text("選擇為普通難度")<<endl;
 		hero_hp = 3500;
 		hero_atk = 500;
 		dragon_hp = 8000;
 		dragon_atk = 250;
 	}
-	else if(choice == 2){
+	else if(choice == 3){
 		cout<<yellow_text("選擇為困難難度")<<endl;
 		hero_hp = 3000;
 		hero_atk = 500;
 		dragon_hp = 10000;
 		dragon_atk = 300;
 	}
-	else if(choice == 3){
+	else if(choice == 4){
 		cout<<yellow_text("選擇為夢魘難度")<<endl;
 		hero_hp = 2500;
 		hero_atk = 400;
