@@ -5,7 +5,7 @@
 #include <iomanip>
 using namespace std;
 //版本資訊
-string version(){return "Beta 6.2.2_DEV";}
+string version(){return "Beta 6.9.0_DEV";}
 //改變文字狀態
 string blink_text(string text){return "\033[5m" + text + "\033[25m";}
 string bold_text(string text){return "\033[1m" + text + "\033[22m";}
