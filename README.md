@@ -11,5 +11,5 @@
 * 支援C++11及以上版本
 ##### 範例
 ```bash
-g++ --std=c++11 PDQ.cpp
+g++ -std=c++11 PDQ.cpp battle_check.cpp render.cpp -o PDQ.exe
 ```

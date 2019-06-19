@@ -3,115 +3,16 @@
 #include <chrono>
 #include <thread>
 #include <iomanip>
+
+/* load custom headers */
+#include "render.h"
+#include "battle_check.h"
+
 using namespace std;
 //版本資訊
-string version(){return "Beta 6.9.0_DEV";}
-//改變文字狀態
-string blink_text(string text){return "\033[5m" + text + "\033[25m";}
-string bold_text(string text){return "\033[1m" + text + "\033[22m";}
-string italic_text(string text){return "\033[3m" + text + "\033[23m";}
-//改變文字顏色
-string black_text(string text){return "\033[38;5;00m" + text + "\033[37m";}
-string dark_red_text(string text){return "\033[38;5;01m" + text + "\033[37m";}
-string red_text(string text){return "\033[38;5;09m" + text + "\033[37m";}
-string green_text(string text){return "\033[38;5;10m" + text + "\033[37m";}
-string yellow_text(string text){return "\033[38;5;11m" + text + "\033[37m";}
-string blue_text(string text){return "\033[38;5;12m" + text + "\033[37m";}
-string magenta_text(string text){return "\033[38;5;13m" + text + "\033[37m";}
-string cyan_text(string text){return "\033[38;5;14m" + text + "\033[37m";}
-string white_text(string text){return "\033[38;5;15m" + text + "\033[37m";}
+inline string version(){return "Beta 6.9.1_DEV";}
 
-string custom_text(string text,int color=7){
-	return "\033[38;5;"+to_string(color)+"m" + text + "\033[37m";
-	}
-void custom_background(bool status,int color=0){
-	if (status == true) cout<<"\033[48;5;"+to_string(color)+"m";
-	else cout<<"\033[48;5;0m";
-}
-
-void pause()
-{
-	/*cin.sync();
-    cin.clear();
-    cout << "Press Enter to continue ..." <<endl;
-    cin.get();*/
-	cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    string dummy;
-    cout << "Press any key to continue . . .";
-    getline(std::cin, dummy);
-}
-
-void dragon_death_check(int hp){
-	if(hp<=0)
-    {
-        this_thread::sleep_for(chrono::milliseconds(700));
-        cout<<endl<<red_text("勇者擊敗了惡龍!");
-        this_thread::sleep_for(chrono::milliseconds(300));
-        cout<<endl;
-        pause();
-        exit(0);
-    }
-}
-
-void gain_hp_check(int* gain_hp,int* hp,int* max_hp){
-	*hp += *gain_hp;
-	if(*hp > *max_hp)
-	{
-		*gain_hp += *max_hp-*hp;
-		*hp = *max_hp;
-	}
-}
-
-void def_check(int* shielding,bool* defend,int* damage){
-    if(*shielding==0&&*defend==true)
-    {
-        cout<<"勇者防禦住了 "<<int(*damage*0.6)<<" 點傷害"<<endl<<endl;
-        *damage=*damage*0.4;
-        *defend=false;
-    }
-    else if(*shielding>0&&*defend==false)
-    {
-        cout<<"(護盾吸收了 "<<*damage<<" 點傷害)"<<endl;
-        *damage=0;
-    }
-    else if(*shielding>0&&*defend==true)
-    {
-        cout<<"勇者防禦住了 0 點傷害"<<endl<<endl;
-        *defend=false;
-        cout<<"(護盾吸收了 "<<*damage<<" 點傷害)"<<endl;
-        *damage=0;
-    }
-}
-
-void dragon_shield_check(int* shield,int* damage){
-	*shield -= *damage;
-	if(*shield<0){
-		cout<<"(龍盾吸收了 "<<*shield + *damage<<" 點傷害)"<<endl;
-		*damage = -*shield;
-		*shield=0;
-	}
-	else {
-		cout<<"(龍盾吸收了 "<<*damage<<" 點傷害)"<<endl;
-		*damage=0;
-	}
-}
-
-int reflect_damage(int* reflect,int damage)
-{
-    if(*reflect==2)
-    {
-        damage *= 0.4;
-        cout<<endl<<"勇者受到 "<<damage<<" 點反彈傷害"<<endl;
-        return damage;
-    }
-    else
-    {
-        damage *= 0.4*2;
-        cout<<endl<<"勇者受到 "<<damage<<" 點反彈傷害"<<endl;
-        return damage;
-    }
-}
+void pause();
 
 struct entity{
 	int maxhp;
@@ -774,4 +675,17 @@ int main()
 		hero.ap++;
 		this_thread::sleep_for(chrono::milliseconds(1500));
 	}
+}
+
+void pause()
+{
+	/*cin.sync();
+    cin.clear();
+    cout << "Press Enter to continue ..." <<endl;
+    cin.get();*/
+	cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    string dummy;
+    cout << "Press any key to continue . . .";
+    getline(std::cin, dummy);
 }
