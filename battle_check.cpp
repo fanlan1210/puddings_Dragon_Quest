@@ -4,6 +4,7 @@
 
 #include "battle_check.h"
 #include "render.h"
+#include "misc.h"
 
 using namespace std;
 
@@ -14,9 +15,7 @@ void dragon_death_check(int hp){
         cout<<endl<<red_text("勇者擊敗了惡龍!");
         this_thread::sleep_for(chrono::milliseconds(300));
         cout<<endl;
-        string dummy;
-        cout << "Press any key to continue . . .";
-        getline(std::cin, dummy);
+        pause();
         exit(0);
     }
 }
