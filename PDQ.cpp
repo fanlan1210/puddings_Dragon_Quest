@@ -580,48 +580,7 @@ int main()
 			cout<<bold_text( effect + "效果將在下一回合結束時失效")<<endl<<endl;
 			this_thread::sleep_for(chrono::milliseconds(200));
 		}
-		/*
-		if(burned==1)
-		{
-			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("燃燒效果將在下一回合結束時失效")<<endl<<endl;
-		}
-		if(dizzing==1)
-		{
-			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("暈眩效果將在下一回合結束時失效")<<endl<<endl;
-		}
-		if(sapping==1)
-		{
-			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("吸血效果將在下一回合結束時失效")<<endl<<endl;
-		}
-		if(shielding==1)
-		{
-			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("護盾效果將在下一回合結束時失效")<<endl<<endl;
-		}
-		if(curing==1)
-		{
-			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("回復效果將在下一回合結束時失效")<<endl<<endl;
-		}
-		if(weaken==1)
-        {
-            this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("弱化效果將在下一回合結束時失效")<<endl<<endl;
-        }
-        if(reflect==1)
-        {
-            this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("反彈效果將在下一回合結束時失效")<<endl<<endl;
-        }
-        if(poison==1)
-        {
-			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("中毒效果將在下一回合結束時失效")<<endl<<endl;
-        }
-		*/
+
 		hero.ap++;
 		this_thread::sleep_for(chrono::milliseconds(1500));
 	}

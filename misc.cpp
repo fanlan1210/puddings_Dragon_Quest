@@ -86,10 +86,6 @@ void help(){
 
 void pause()
 {
-	/*cin.sync();
-    cin.clear();
-    cout << "Press Enter to continue ..." <<endl;
-    cin.get();*/
 	cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     string dummy;
