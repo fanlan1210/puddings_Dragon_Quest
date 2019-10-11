@@ -12,30 +12,27 @@
 
 using namespace std;
 //版本資訊
-inline string version(){return "Beta 6.9.3_DEV";}
+inline string version(){return "Beta 6.9.4_DEV";}
 
 void pause();
 
 struct entity{
-	int maxhp;
-	int hp;
-	int atk;
-	int ap;
+	int maxhp=0;
+	int hp=0;
+	int atk=0;
+	int ap=0;
 };
 
-int main()
+int main(int argc, char *argv[])
 {
 	/* 初始化 */
 	entity hero,dragon;
-	//int /*hero_maxhp,hero_hp,hero_atk,*/ap=0; //勇者數值
-	hero.ap=0;
+	//勇者數值
 	int /*dragon_hp,dragon_atk,dragon_maxhp,*/dragon_shield=0; //惡龍數值
 	int round,random_num,damage,gain_hp,lost_hp; // 計算用數值
 
 	//勇者技能開關
-	bool /*defend=false,
-		 freeze=true,fire=true,swipe=true,dizzy=true,blood=true,
-		 shield=true,cure=true,treat=true,*/pow=false;
+	bool pow=false;
 	map<string,bool> skillSwitch;
 	skillSwitch["defend"]=false;
 	skillSwitch["freeze"]=true;
@@ -49,9 +46,6 @@ int main()
 		//pow=false
 
 	//Cool Down
-	/*int freeze_cd=18,fire_cd=9,swipe_cd=5,dizzy_cd=13,blood_cd=27,shield_cd=16,
-		cure_cd=20,treat_cd=14; */
-
 	map<string,pair<int,int>> mapCooldown; // CD pair : current,max
 	mapCooldown["freeze"] = {18,18};
 	mapCooldown["fire"] = {9,9};
@@ -121,6 +115,8 @@ int main()
 		dragon.hp = 12000;
 		dragon.atk = 300;
 	}
+	else
+		cerr<<"輸入錯誤，程式強制終止!"<<endl;
 	cout<<"------------------------------------------------------------"<<endl;
 	hero.maxhp = hero.hp;
 	dragon.maxhp = dragon.hp;
@@ -214,63 +210,6 @@ int main()
 			else if((it->second).first == (it->second).second)
 				skillSwitch[it->first] = true;
 		}
-		/*
-		if(freeze==false)
-		{
-			if(freeze_cd<18)
-				freeze_cd++;
-			else if(freeze_cd==18)
-				freeze=true;
-		}
-		if(fire==false)
-		{
-			if(fire_cd<9)
-				fire_cd++;
-			else if(fire_cd==9)
-				fire=true;
-		}
-		if(swipe==false)
-		{
-			if(swipe_cd<5)
-				swipe_cd++;
-			else if(swipe_cd==5)
-				swipe=true;
-		}
-		if(dizzy==false)
-		{
-			if(dizzy_cd<13)
-				dizzy_cd++;
-			else if(dizzy_cd==13)
-				dizzy=true;
-		}
-		if(blood==false)
-		{
-			if(blood_cd<27)
-				blood_cd++;
-			else if(blood_cd==27)
-				blood=true;
-		}
-		if(shield==false)
-		{
-			if(shield_cd<16)
-				shield_cd++;
-			else if(shield_cd==16)
-				shield=true;
-		}
-		if(cure==false)
-		{
-			if(cure_cd<20)
-				cure_cd++;
-			else if(cure_cd==20)
-				cure=true;
-		}
-		if(treat==false)
-		{
-			if(treat_cd<14)
-				treat_cd++;
-			else if(treat_cd==14)
-				treat=true;
-		}*/
 
 		// 隨機傷害倍率
 		random_num=gen_rand()%14;
@@ -344,34 +283,28 @@ int main()
 			else if(skillSwitch["freeze"] == true&& ( action=="1" || action == "freeze") )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				//skillSwitch["freeze"] = false;
 				mapCooldown["freeze"].first = 0;
 				frozen=2;
 				cout<<yellow_text("勇者使用了") + cyan_text("freeze(冰凍)")<<endl;
-				//freeze_cd=freeze_cd-18;
 				break;
 			}
 			else if(skillSwitch["fire"] == true&& ( action=="2" || action == "fire" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				//skillSwitch["fire"] = false;
 				mapCooldown["fire"].first = 0;
 				cout<<yellow_text("勇者使用了") + red_text("fire(燃燒)")<<endl;
 	   			burned=5;
-	   			//fire_cd=fire_cd-9;
 	   			break;
 			}
 			else if(skillSwitch["swipe"] == true&& ( action=="3" || action == "swipe" ) )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				//skillSwitch["swipe"] = false;
 				mapCooldown["swipe"].first = 0;
 	   			cout<<yellow_text("\a勇者使用了swipe(重擊)")<<endl<<endl;
 				damage=hero.atk*3;
 				if(explosion>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
 				cout<<"勇者對惡龍造成了 "<<damage<<" 點傷害"<<endl;
 	    		dragon.hp=dragon.hp-damage;
-	    		//swipe_cd-=5;
 
 				dragon_death_check(dragon.hp);
 	    		break;
@@ -379,54 +312,44 @@ int main()
 			else if(skillSwitch["dizzy"] == true&&( action=="4" || action == "dizzy" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				//skillSwitch["dizzy"] = false;
 				mapCooldown["dizzy"].first = 0;
 	   			cout<<yellow_text("勇者使用了dizzy(暈眩)")<<endl;
 	   			dizzing=4;
-	   			//dizzy_cd-=13;
 	   			break;
 			}
 			else if(skillSwitch["blood"] == true&&( action=="5" || action == "blood" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				//skillSwitch["blood"]=false;
 				mapCooldown["blood"].first = 0;
 	   			cout<<yellow_text("勇者使用了") + dark_red_text("blood(吸血)")<<endl;
 	   			sapping=3;
-	   			//blood_cd-=27;
 	   			break;
 			}
 			else if(skillSwitch["shield"] == true&&( action=="6" || action == "shield" ) )
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				skillSwitch["shield"]=false;
 				mapCooldown["shield"].first = 0;
 	   			cout<<yellow_text("勇者使用了shield(護盾)")<<endl;
 	   			shielding=3;
-	   			//shield_cd-=16;
 	   			break;
 			}
 			else if(skillSwitch["cure"] == true&&( action=="7" || action == "cure" ))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				//skillSwitch["cure"] = false;
 				mapCooldown["cure"].first = 0;
 				cout<<yellow_text("勇者使用了") +red_text("cure(治癒)")<<endl;
 				gain_hp=hero.maxhp*0.4;
 				cout<<endl;
 				gain_hp_check(&gain_hp,&hero.hp,&hero.maxhp);
 				cout<<"勇者回復了 "<<gain_hp<<" 點生命"<<endl;
-				//cure_cd-=20;
 				break;
 			}
 			else if(skillSwitch["treat"] == true&&(action=="8"|| action == "treat"))
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
-				//skillSwitch["treat"]=false;
 				mapCooldown["treat"].first = 0;
 				cout<<yellow_text("勇者使用了") + red_text("treat(回復)")<<endl;
 				curing=3;
-				//treat_cd-=14;
 				break;
 			}
 			else if(pow==true&& (action=="!"|| action == "pow"))

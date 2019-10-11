@@ -3,6 +3,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <cstdlib>
 #include "render.h"
 
 using namespace std;
@@ -86,9 +87,16 @@ void help(){
 
 void pause()
 {
+    #ifdef _WIN32
+        system("pause");
+    #else
+        system("read -n 1 -p \"Press any key to continue...\"");
+    #endif
+    /*
 	cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     string dummy;
-    cout << "Press any key to continue . . .";
+    cout << "Press enter key to continue . . .";
     getline(cin, dummy);
+    */
 }
