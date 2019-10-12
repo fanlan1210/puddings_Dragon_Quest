@@ -12,7 +12,7 @@
 
 using namespace std;
 //版本資訊
-inline string version(){return "Beta 6.9.4_DEV";}
+inline string version(){return "Beta 6.9.5_DEV";}
 
 void pause();
 
@@ -115,8 +115,10 @@ int main(int argc, char *argv[])
 		dragon.hp = 12000;
 		dragon.atk = 300;
 	}
-	else
+	else{
 		cerr<<"輸入錯誤，程式強制終止!"<<endl;
+		return 1;
+	}
 	cout<<"------------------------------------------------------------"<<endl;
 	hero.maxhp = hero.hp;
 	dragon.maxhp = dragon.hp;
