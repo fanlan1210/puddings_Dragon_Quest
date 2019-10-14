@@ -12,7 +12,7 @@
 
 using namespace std;
 //版本資訊
-inline string version(){return "Beta 6.9.5_DEV";}
+inline string version(){return "Beta 6.9.6_DEV";}
 
 void pause();
 
@@ -57,24 +57,23 @@ int main(int argc, char *argv[])
 	mapCooldown["treat"] = {0,14};
 	map<string,pair<int,int>>::iterator it;
 
-	bool haveEffect=false;
-	int dizzied=0,burned=0,frozen=0,curing=0,dizzing=0,sapping=0,explosion=0,stand=0; // 惡龍持續狀態
-	/*map<string,pair<int,int>> dragonStatus = {
-		{ "dizzied",{,0} },
-		{ "burned",{,0} },
-		{ "frozen",{,0} },
-		{ "curing",{,0} },
-		{ "dizzing",{,0} },
-		{ "sapping",{,0} },
-		{ "explosion",{,0} },
-		{ "stand",{,0} }
-	}*/
+	/*int dizzied=0,burned=0,frozen=0,curing=0,dizzing=0,sapping=0,explosion=0,stand=0;*/ // 惡龍持續狀態
+	map<string,pair<int,int>> dragonStatus = {
+		//{ "dizzied",{,0} },
+		{ "burned",{0,5} },
+		{ "frozen",{0,2} },
+		{ "dizzing",{0,4} },
+		{ "sapping",{0,3} },
+		{ "explosion",{0,3} },
+		{ "stand",{0,1} }
+	};
 
     /*int weaken=0,reflect=0,poison=0,shielding=0;*/ // 勇者持續狀態
 	map<string,pair<int,int>> heroStatus = {
 		{ "weaken",{0,3} },
 		{ "reflect",{0,2} },
 		{ "poison",{0,5} },
+		{ "treating",{0,3} },
 		{ "shielding",{0,3} }
 	};
 
@@ -218,9 +217,10 @@ int main(int argc, char *argv[])
 		cout<<endl<<endl;
 		cout<<white_text("勇者血量:")<<red_text(to_string(hero.hp))<<white_text("/"+to_string(hero.maxhp))
 			<<white_text("  惡龍血量:")<<red_text(to_string(dragon.hp))<<white_text("/"+to_string(dragon.maxhp));
-		if(explosion>0) cout <<"("<< custom_text("+"+to_string(dragon_shield),128)<<"/"<<custom_text(to_string(explosion),92)<<")";
+		if(dragonStatus["explosion"].first>0) cout <<"("<< custom_text("+"+to_string(dragon_shield),128)<<"/"<<custom_text(to_string(dragonStatus["explosion"].first),92)<<")";
 		cout<<endl;
 
+		bool haveEffect=false;
 		cout<<white_text("勇者附加狀態: ");
 		for(it=heroStatus.begin();it!=heroStatus.end();it++){
 			if( (it->second).first != 0){
@@ -230,12 +230,17 @@ int main(int argc, char *argv[])
 		}
 		if(!haveEffect) cout<<"(None)";
 		cout<<endl;
+
+		haveEffect=false;
 		cout<<white_text("惡龍附加狀態: ");
-		cout<<"(Working In Progress)";
-		//for(it=dragonStatus.begin();it!=dragonStatus.end();it++){
-		//	if( (it->second).first != 0)
-		//		cout<<(it->first)<<" ";
-		//}
+		//cout<<"(Working In Progress)";
+		for(it=dragonStatus.begin();it!=dragonStatus.end();it++){
+			if( (it->second).first != 0){
+				cout<<(it->first)<<" ";
+				haveEffect=true;
+			}
+		}
+		if(!haveEffect) cout<<"(None)";
 
 		cout<<endl<<endl;
 		// 各項技能CD判斷
@@ -269,7 +274,7 @@ int main(int argc, char *argv[])
 			if(action=="+")
 			{
 				this_thread::sleep_for(chrono::milliseconds(600));
-				if(explosion>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
+				if(dragonStatus["explosion"].first>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
 				cout<<white_text("勇者對惡龍造成了 "+to_string(damage)+" 點傷害");
 				if(damage_rate==1.8)
 		    		cout<<"\a(暴擊!)"<<endl;
@@ -283,7 +288,7 @@ int main(int argc, char *argv[])
 			{
 				this_thread::sleep_for(chrono::milliseconds(300));
 				damage/=2;
-				if(explosion>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
+				if(dragonStatus["explosion"].first>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
 				cout<<white_text("勇者對惡龍造成了 " + to_string(damage) + " 點傷害");
 				if(damage_rate==1.8)
 		    		cout<<"\a(暴擊!)";
@@ -302,7 +307,7 @@ int main(int argc, char *argv[])
 				damage=hero.atk*damage_rate;
 				if(heroStatus["weaken"].first>0) {damage*=0.7;}
 				damage/=2;
-				if(explosion>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
+				if(dragonStatus["explosion"].first>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
 				cout<<white_text("勇者對惡龍造成了 " + to_string(damage) + " 點傷害");
 				if(damage_rate==1.8)
 		    		cout<<"\a(暴擊!)";
@@ -323,7 +328,7 @@ int main(int argc, char *argv[])
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				mapCooldown["freeze"].first = mapCooldown["freeze"].second;
-				frozen=2;
+				dragonStatus["frozen"].first=dragonStatus["frozen"].second;
 				cout<<yellow_text("勇者使用了") + cyan_text("freeze(冰凍)")<<endl;
 				break;
 			}
@@ -332,7 +337,7 @@ int main(int argc, char *argv[])
 				this_thread::sleep_for(chrono::milliseconds(900));
 				mapCooldown["fire"].first = mapCooldown["fire"].second;
 				cout<<yellow_text("勇者使用了") + red_text("fire(燃燒)")<<endl;
-	   			burned=5;
+	   			dragonStatus["burned"].first=dragonStatus["burned"].second;
 	   			break;
 			}
 			else if(skillSwitch["swipe"] == true&& ( action=="3" || action == "swipe" ) )
@@ -341,7 +346,7 @@ int main(int argc, char *argv[])
 				mapCooldown["swipe"].first = mapCooldown["swipe"].second;
 	   			cout<<yellow_text("\a勇者使用了swipe(重擊)")<<endl<<endl;
 				damage=hero.atk*3;
-				if(explosion>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
+				if(dragonStatus["explosion"].first>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
 				cout<<"勇者對惡龍造成了 "<<damage<<" 點傷害"<<endl;
 	    		dragon.hp=dragon.hp-damage;
 
@@ -353,7 +358,7 @@ int main(int argc, char *argv[])
 				this_thread::sleep_for(chrono::milliseconds(900));
 				mapCooldown["dizzy"].first = mapCooldown["dizzy"].second;
 	   			cout<<yellow_text("勇者使用了dizzy(暈眩)")<<endl;
-	   			dizzing=4;
+	   			dragonStatus["dizzing"].first=dragonStatus["dizzing"].second;
 	   			break;
 			}
 			else if(skillSwitch["blood"] == true&&( action=="5" || action == "blood" ))
@@ -361,7 +366,7 @@ int main(int argc, char *argv[])
 				this_thread::sleep_for(chrono::milliseconds(900));
 				mapCooldown["blood"].first = mapCooldown["blood"].second;
 	   			cout<<yellow_text("勇者使用了") + dark_red_text("blood(吸血)")<<endl;
-	   			sapping=3;
+	   			dragonStatus["sapping"].first = dragonStatus["sapping"].second;
 	   			break;
 			}
 			else if(skillSwitch["shield"] == true&&( action=="6" || action == "shield" ) )
@@ -388,7 +393,7 @@ int main(int argc, char *argv[])
 				this_thread::sleep_for(chrono::milliseconds(900));
 				mapCooldown["treat"].first = mapCooldown["treat"].second;
 				cout<<yellow_text("勇者使用了") + red_text("treat(回復)")<<endl;
-				curing=3;
+				heroStatus["treating"].first=heroStatus["treating"].second;
 				break;
 			}
 			else if(pow==true&& (action=="!"|| action == "pow"))
@@ -400,7 +405,7 @@ int main(int argc, char *argv[])
 				cout<<"\a\a\a\a\a\a\a\a\a\a";
 				this_thread::sleep_for(chrono::milliseconds(800));
 				damage=hero.atk*5;
-				if(explosion>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
+				if(dragonStatus["explosion"].first>0 && dragon_shield!=0) dragon_shield_check(&dragon_shield,&damage);
 				cout<<white_text("勇者對惡龍造成了 "+ to_string(damage) +" 點傷害")<<endl;
 	    		dragon.hp=dragon.hp-(hero.atk*5);
 	    		if(heroStatus["reflect"].first>0){ hero.hp -= reflect_damage(&heroStatus["reflect"].first,hero.atk*5);}
@@ -412,7 +417,7 @@ int main(int argc, char *argv[])
 				this_thread::sleep_for(chrono::milliseconds(500));
 				cout<<endl;
 				if ( random_num == 6 ) {
-					 stand=1;
+					 dragonStatus["stand"].first = dragonStatus["stand"].second;
 					 cout<<"定身成功!"<<endl;
 				}
 				else { cout<<"定身失敗!"<<endl; }
@@ -424,9 +429,9 @@ int main(int argc, char *argv[])
 				continue;
 			}
 		}
-		if(burned>0||curing>0||sapping>0||heroStatus["shielding"].first>0)
+		if(dragonStatus["burned"].first>0||heroStatus["treating"].first>0||dragonStatus["sapping"].first>0||heroStatus["shielding"].first>0)
 		{
-			if(burned>0)
+			if(dragonStatus["burned"].first>0)
 			{
 				lost_hp=hero.atk*0.4;
 				this_thread::sleep_for(chrono::milliseconds(900));
@@ -434,19 +439,19 @@ int main(int argc, char *argv[])
 				cout<<endl;
 				cout<<italic_text("燃燒對惡龍造成了 "+to_string(lost_hp)+" 點傷害")<<endl;
 				//if(reflect>0){ hero.hp -= reflect_damage(&reflect,damage);}
-				burned--;
+				dragonStatus["burned"].first--;
 				dragon_death_check(dragon.hp);
 			}
-			if(curing>0)
+			if(heroStatus["treating"].first>0)
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				gain_hp=(hero.maxhp-hero.hp)*0.2;
 				gain_hp_check(&gain_hp,&hero.hp,&hero.maxhp);
 				cout<<endl;
 				cout<<italic_text("勇者回復了 "+to_string(gain_hp)+" 點血量")<<endl;
-				curing--;
+				heroStatus["treating"].first--;
 			}
-			if(sapping>0)
+			if(dragonStatus["sapping"].first>0)
 			{
 				this_thread::sleep_for(chrono::milliseconds(900));
 				gain_hp=dragon.hp*0.03;
@@ -454,21 +459,21 @@ int main(int argc, char *argv[])
 				dragon.hp=dragon.hp-gain_hp;
 				cout<<endl;
 				cout<<italic_text("勇者將惡龍的 "+to_string(gain_hp)+" 點血量轉換成自己的血量")<<endl;
-				sapping--;
+				dragonStatus["sapping"].first--;
 				dragon_death_check(dragon.hp);
 			}
 			if(heroStatus["shielding"].first>0)
                 heroStatus["shielding"].first--;
 			cout<<endl;
 		}
-		if(stand==1)
+		if(dragonStatus["stand"].first==1)
 		{
-			stand=false;
+			dragonStatus["stand"].first = 0;
 			continue;
 		}
         if(heroStatus["weaken"].first>0) heroStatus["weaken"].first--;
         if(heroStatus["reflect"].first>0) heroStatus["reflect"].first--;
-		if(explosion>0) explosion--;
+		if(dragonStatus["explosion"].first>0) dragonStatus["explosion"].first--;
 		random_num=gen_rand()%14;
 		damage_rate=1;
 		if(random_num==0||random_num==1) {damage_rate=0.9;}
@@ -477,12 +482,12 @@ int main(int argc, char *argv[])
         if(random_num==8||random_num==9) {damage_rate=1.1;}
         if(random_num==10) {damage_rate=1.8;}
 		/* 如果惡龍沒有處於冰凍狀態，才繼續惡龍的攻擊判斷 */
-		if(frozen==0)
+		if(dragonStatus["frozen"].first==0)
 		{
 			this_thread::sleep_for(chrono::milliseconds(900));
 		    damage=dragon.atk*damage_rate; //惡龍傷害計算
 		    if(heroStatus["weaken"].first) {damage*=1.1;}
-		   	if(dizzing>0)
+		   	if(dragonStatus["dizzing"].first>0)
 			{
 				random_num=0;
 
@@ -494,7 +499,8 @@ int main(int argc, char *argv[])
 				{
 					case 0:
 					case 1:
-						dizzied=1;
+						//dizzied=1;
+						damage=-damage;
 						cout<<"暈眩成功!"<<endl<<endl;
 						break;
 					case 2:
@@ -503,9 +509,10 @@ int main(int argc, char *argv[])
 						cout<<"暈眩失敗!惡龍仍保持清醒"<<endl<<endl;
 						break;
 				}
-				dizzing--;
+				dragonStatus["dizzing"].first--;
 			}
-			if(dizzied==0)
+			//if(dizzied==0)
+			if(damage>0)
 			{
 				random_num=gen_rand()%20;
 				if(random_num==0||random_num==1||random_num==2||random_num==3){
@@ -537,10 +544,10 @@ int main(int argc, char *argv[])
                         hero.hp-=damage;
                         cout<<white_text("惡龍對勇者造成了 " + to_string(damage) + " 點傷害")<<endl;
                     }
-				}else if(random_num==19 && explosion==0){
+				}else if(random_num==19 && dragonStatus["explosion"].first==0){
 					cout<<yellow_text("惡龍使出") + custom_text("毀滅龍盾",128)<<endl;
 					dragon_shield=dragon.maxhp*0.2;
-					explosion=3;
+					dragonStatus["explosion"].first = dragonStatus["explosion"].second;
 				}
 				else{
                     cout<<white_text("惡龍對勇者造成了 " + to_string(damage) + " 點傷害");
@@ -555,9 +562,11 @@ int main(int argc, char *argv[])
                     hero.hp=hero.hp-damage;
                 }
 			}
-			else if(dizzied==1)
+			//else if(dizzied==1)
+			else if(damage<0)
 			{
-				dizzied--;
+				//dizzied--;
+				damage=-damage;
 				cout<<italic_text("惡龍對自己造成了 "+to_string(damage)+" 點傷害");
 			    if(damage_rate==1.8)
 			    {
@@ -582,19 +591,19 @@ int main(int argc, char *argv[])
 		    }
 		    cout<<endl;
 		}
-		else if(frozen==1)
+		else if(dragonStatus["frozen"].first==1)
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
 			cout<<bold_text("惡龍將在下一回合解凍")<<endl<<endl;
-			frozen--;
+			dragonStatus["frozen"].first--;
 		}
 		else
 		{
 			this_thread::sleep_for(chrono::milliseconds(200));
-			cout<<bold_text("惡龍將在 "+to_string(frozen)+" 回合後解凍")<<endl<<endl;
-			frozen--;
+			cout<<bold_text("惡龍將在 "+to_string(dragonStatus["frozen"].first)+" 回合後解凍")<<endl<<endl;
+			dragonStatus["frozen"].first--;
 		}
-		if(explosion==0 && dragon_shield>0){
+		if(dragonStatus["explosion"].first==0 && dragon_shield>0){
 			hero.hp=0;
 			cout<<custom_text("勇者被龍盾毀滅了",125)<<endl;
 			pause();
@@ -608,11 +617,11 @@ int main(int argc, char *argv[])
         }
 
 		effect = "";
-		if(burned==1) effect += "燃燒 ";
-		if(dizzing==1 && frozen==0) effect += "暈眩 ";
-		if(sapping==1) effect += "吸血 ";
+		if(dragonStatus["burned"].first==1) effect += "燃燒 ";
+		if(dragonStatus["dizzing"].first==1 && dragonStatus["frozen"].first==0) effect += "暈眩 ";
+		if(dragonStatus["sapping"].first==1) effect += "吸血 ";
 		if(heroStatus["shielding"].first==1) effect += "護盾 ";
-		if(curing==1) effect += "回復 ";
+		if(heroStatus["treating"].first==1) effect += "回復 ";
 		if(heroStatus["weaken"].first==1) effect += "弱化 ";
         if(heroStatus["reflect"].first==1) effect += "反彈 ";
         if(heroStatus["poison"].first==1) effect += "中毒 ";
