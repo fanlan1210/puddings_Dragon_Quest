@@ -13,3 +13,10 @@
 ```bash
 g++ -std=c++11 PDQ.cpp battle_check.cpp render.cpp misc.cpp
 ```
+如果有安裝CMake，也可參考以下範例操作:
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
