@@ -9,10 +9,11 @@
 #include "render.h"
 #include "battle_check.h"
 #include "misc.h"
+#include "entity.h"
 
 using namespace std;
 //版本資訊
-inline string version(){return "Beta 6.9.6_DEV";}
+inline string version(){return "Beta 6.99.0_DEV";}
 
 void pause();
 
@@ -27,6 +28,14 @@ int main(int argc, char *argv[])
 {
 	/* 初始化 */
 	entity hero,dragon;
+	Hero player;
+	Dragon enemy;
+
+	/*Entity test(100,0,1);
+	cout<<test.getHp()<<'\n';
+	test.setAtk(5);
+	cout<<test.getAtk()<<'\n';*/
+
 	//勇者數值
 	int /*dragon_hp,dragon_atk,dragon_maxhp,*/dragon_shield=0; //惡龍數值
 	int round,random_num,damage,gain_hp,lost_hp; // 計算用數值
@@ -98,40 +107,58 @@ int main(int argc, char *argv[])
 		cout<<yellow_text("[DEBUG]選擇為自訂難度")<<endl;
 		cout<<white_text("勇者最大血量: ");
 		cin>>hero.hp;
+		player.setHp(hero.hp);
+		player.setHpMax(hero.hp);
+
 		cout<<endl<<white_text("勇者基礎攻擊力: ");
 		cin>>hero.atk;
+		player.setAtk(hero.atk);
+
 		cout<<endl<<white_text("惡龍最大血量: ");
 		cin>>dragon.hp;
+		enemy.setHp(dragon.hp);
+		enemy.setHpMax(dragon.hp);
+
 		cout<<endl<<white_text("惡龍基礎攻擊力: ");
 		cin>>dragon.atk;
+		enemy.setAtk(dragon.atk);
 	}
 	else if(choice == 1){
 		cout<<yellow_text("選擇為新手難度")<<endl;
 		hero.hp = 4000;
 		hero.atk = 600;
+		// hp,mp,atk
+		player = Hero(4000,2000,600);
 		dragon.hp = 4000;
 		dragon.atk = 200;
+		enemy = Dragon(4000,4000,200);
 	}
 	else if(choice == 2){
 		cout<<yellow_text("選擇為普通難度")<<endl;
 		hero.hp = 3500;
 		hero.atk = 500;
+		player = Hero(3500,1500,500);
 		dragon.hp = 8000;
 		dragon.atk = 250;
+		enemy = Dragon(8000,8000,250);
 	}
 	else if(choice == 3){
 		cout<<yellow_text("選擇為困難難度")<<endl;
 		hero.hp = 3000;
 		hero.atk = 500;
+		player = Hero(3000,1000,500);
 		dragon.hp = 10000;
 		dragon.atk = 300;
+		enemy = Dragon(10000,10000,300);
 	}
 	else if(choice == 4){
 		cout<<yellow_text("選擇為夢魘難度")<<endl;
 		hero.hp = 2500;
 		hero.atk = 400;
+		player = Hero(2500,500,400);
 		dragon.hp = 12000;
 		dragon.atk = 300;
+		enemy = Dragon(12000,10000,300);
 	}
 	else{
 		cerr<<"輸入錯誤，程式強制終止!"<<endl;
@@ -218,6 +245,10 @@ int main(int argc, char *argv[])
 		cout<<white_text("勇者血量:")<<red_text(to_string(hero.hp))<<white_text("/"+to_string(hero.maxhp))
 			<<white_text("  惡龍血量:")<<red_text(to_string(dragon.hp))<<white_text("/"+to_string(dragon.maxhp));
 		if(dragonStatus["explosion"].first>0) cout <<"("<< custom_text("+"+to_string(dragon_shield),128)<<"/"<<custom_text(to_string(dragonStatus["explosion"].first),92)<<")";
+		cout<<endl;
+
+		cout<<white_text("[WIP]勇者血量:")<<red_text(to_string(player.getHp()))<<white_text("/"+to_string(player.getHpMax()))
+			<<white_text("  惡龍血量:")<<red_text(to_string(enemy.getHp()))<<white_text("/"+to_string(enemy.getHpMax()));
 		cout<<endl;
 
 		bool haveEffect=false;

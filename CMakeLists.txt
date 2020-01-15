@@ -5,4 +5,4 @@ project(pdq)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(pdq PDQ.cpp battle_check.cpp render.cpp misc.cpp)
+add_executable(pdq PDQ.cpp battle_check.cpp render.cpp misc.cpp entity.cpp)
