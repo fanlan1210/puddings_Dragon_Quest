@@ -242,13 +242,19 @@ int main(int argc, char *argv[])
 		cout<<yellow_text("| !  ")<<left<<setw(30)<<blink_text(yellow_text("pow"))<<white_text(" AP: ")<<left<<setw(2)<<hero.ap<<white_text("(10)|");
 		}
 		cout<<endl<<endl;
-		cout<<white_text("勇者血量:")<<red_text(to_string(hero.hp))<<white_text("/"+to_string(hero.maxhp))
+
+		/*cout<<white_text("勇者血量:")<<red_text(to_string(hero.hp))<<white_text("/"+to_string(hero.maxhp))
 			<<white_text("  惡龍血量:")<<red_text(to_string(dragon.hp))<<white_text("/"+to_string(dragon.maxhp));
 		if(dragonStatus["explosion"].first>0) cout <<"("<< custom_text("+"+to_string(dragon_shield),128)<<"/"<<custom_text(to_string(dragonStatus["explosion"].first),92)<<")";
-		cout<<endl;
+		cout<<endl;*/
 
-		cout<<white_text("[WIP]勇者血量:")<<red_text(to_string(player.getHp()))<<white_text("/"+to_string(player.getHpMax()))
+		// temporary set
+		player.setHp(hero.hp);
+		enemy.setHp(dragon.hp);
+
+		cout<<white_text("勇者血量:")<<red_text(to_string(player.getHp()))<<white_text("/"+to_string(player.getHpMax()))
 			<<white_text("  惡龍血量:")<<red_text(to_string(enemy.getHp()))<<white_text("/"+to_string(enemy.getHpMax()));
+		if(dragonStatus["explosion"].first>0) cout <<"("<< custom_text("+"+to_string(dragon_shield),128)<<"/"<<custom_text(to_string(dragonStatus["explosion"].first),92)<<")";
 		cout<<endl;
 
 		bool haveEffect=false;
