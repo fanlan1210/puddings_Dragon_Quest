@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "skill.h"
 Entity::Entity(){
     hp = 0;
     mp = 0;
@@ -51,14 +52,24 @@ void Entity::adjMp(int _mp){
     mp += _mp;
 }
 
-Hero::Hero() : Entity(){
+Hero::Hero() : Entity(),Skill(){
     ap = 0;
 }
-Hero::Hero(int _hp,int _mp,int _atk,int _ap) : Entity(_hp,_mp,_atk){
+Hero::Hero(int _hp,int _mp,int _atk,int _ap) : Entity(_hp,_mp,_atk),Skill(_atk){
     ap = _ap;
 }
 void Hero::adjAp(int _ap){
     ap += _ap;
+}
+
+bool Hero::attack(string cmd,Entity &target) {
+    if (cmd == "+"){
+        target.adjHp(-beat());
+    }
+    else{
+        return false;
+    }
+    return true;
 }
 
 Dragon::Dragon() : Entity(){}

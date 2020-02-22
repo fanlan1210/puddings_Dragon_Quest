@@ -1,5 +1,9 @@
 #ifndef ENTITY_H
 #define ENTITY_H
+
+#include <string>
+#include "skill.h"
+using std::string;
 class Entity{
 public:
     Entity();
@@ -26,18 +30,19 @@ private:
     double damage_rate;
 };
 
-class Hero : public Entity{
+class Hero : public Entity,Skill{
 public:
     Hero();
     Hero(int,int,int,int = 0);
     int getAp();
     void setAp(int);
     void adjAp(int);
+    bool attack(string cmd,Entity &target);
 private:
     int ap;
 };
 
-class Dragon : public Entity{
+class Dragon : public Entity,Skill{
 public:
     Dragon();
     Dragon(int,int,int);
