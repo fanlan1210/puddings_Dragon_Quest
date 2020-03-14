@@ -1,11 +1,16 @@
 #include "entity.h"
 #include "skill.h"
+#include <iostream>
+
+using std::cout;
+
 Entity::Entity(){
     hp = 0;
     mp = 0;
     atk = 0;
     hp_max = hp;
     mp_max = mp;
+    name = "勇者";
 }
 
 Entity::Entity(int _hp,int _mp,int _atk){
@@ -14,6 +19,7 @@ Entity::Entity(int _hp,int _mp,int _atk){
     hp_max = hp;
     mp_max = mp;
     atk = _atk;
+    name = "勇者";
 }
 int Entity::getHp(){
     return hp;
@@ -52,6 +58,14 @@ void Entity::adjMp(int _mp){
     mp += _mp;
 }
 
+string Entity::getName(){
+    return name;
+}
+
+void Entity::naming(string new_name){
+    name = new_name;
+}
+
 Hero::Hero() : Entity(),Skill(){
     ap = 0;
 }
@@ -65,6 +79,13 @@ void Hero::adjAp(int _ap){
 bool Hero::attack(string cmd,Entity &target) {
     if (cmd == "+"){
         target.adjHp(-beat());
+        cout<<getName()<<"對惡龍造成了 "<<getDamage()<<"點傷害\n";
+    }
+    else if(cmd == "++"){
+        target.adjHp(-beat()/2);
+        cout<<getName()<<"對惡龍造成了 "<<getDamage()/2<<"點傷害\n";
+        target.adjHp(-beat()/2);
+        cout<<getName()<<"對惡龍造成了 "<<getDamage()/2<<"點傷害\n";
     }
     else{
         return false;
@@ -72,5 +93,9 @@ bool Hero::attack(string cmd,Entity &target) {
     return true;
 }
 
-Dragon::Dragon() : Entity(){}
-Dragon::Dragon(int _hp,int _mp,int _atk) : Entity(_hp,_mp,_atk){}
+Dragon::Dragon() : Entity(),Skill(){}
+Dragon::Dragon(int _hp,int _mp,int _atk) : Entity(_hp,_mp,_atk),Skill(_atk){}
+
+void Dragon::attack(Entity &target){
+    target.adjHp(-beat());
+}

@@ -18,11 +18,13 @@ public:
     int freeze();
     int swipe();
     int dizzy();
+    int getDamage();
 private:
     string name;
     int damage;
     int atk_base;
     double damage_rate;
     int cost;
+    int random_num;
 };
 #endif

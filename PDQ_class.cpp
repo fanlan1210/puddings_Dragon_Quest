@@ -13,7 +13,7 @@
 
 using namespace std;
 //版本資訊
-inline string version(){return "Beta 6.99.1_DEV";}
+inline string version(){return "Beta 6.99.2_DEV";}
 
 void pause();
 
@@ -104,6 +104,7 @@ int main(int argc, char *argv[])
 	cout<<"請選擇遊戲難度(1:新手 || 2:普通 || 3:困難 || 4:夢魘)"<<endl;
 	cin>>choice;
 	if (choice == 0){
+		cout<<red_text("[DEBUG]除錯模式啟動")<<endl;
 		cout<<yellow_text("[DEBUG]選擇為自訂難度")<<endl;
 		cout<<white_text("勇者最大血量: ");
 		cin>>hero.hp;
@@ -122,6 +123,15 @@ int main(int argc, char *argv[])
 		cout<<endl<<white_text("惡龍基礎攻擊力: ");
 		cin>>dragon.atk;
 		enemy.setAtk(dragon.atk);
+
+		string tmp;
+		cout<<"[DEBUG]是否變更玩家名稱?[y/n]:";
+		cin>>tmp;
+		if(tmp=="y" || tmp=="yes"){
+			cout<<"新名稱: ";
+			cin>>tmp;
+			player.naming(tmp);
+		}
 	}
 	else if(choice == 1){
 		cout<<yellow_text("選擇為新手難度")<<endl;
@@ -309,15 +319,33 @@ int main(int argc, char *argv[])
 		    cout << white_text(">>> ");
 		    cin>>action;
 			cout<<endl;
-
+			/* 玩家攻擊 */
 			if(!player.attack(action,enemy))
 			{
 				cout<<italic_text("你輸入的文字並未屬於任何一項行動或暫不可用")<<endl<<endl;
 				continue;
 			}else{
+				//cout<<player.getName()<<"對惡龍造成了 "<<player.getDamage()<<"點傷害\n";
 				dragon_death_check(enemy.getHp());
-				break;
+				this_thread::sleep_for(chrono::milliseconds(500));
+				cout<<endl;
 			}
+
+			/* 惡龍攻擊 */
+			enemy.attack(player);
+			cout<<"惡龍對"<<player.getName()<<"造成了 "<<enemy.getDamage()<<"點傷害\n";
+			this_thread::sleep_for(chrono::milliseconds(1000));
+			if(player.getHp()<=0)
+			{
+					this_thread::sleep_for(chrono::milliseconds(700));
+			    	cout<<endl<<dark_red_text("勇者被惡龍擊敗了!");
+					this_thread::sleep_for(chrono::milliseconds(500));
+					cout<<endl;
+					pause();
+					return 0;
+			}
+			break;
+
 			/*
 			if(action=="+")
 			{

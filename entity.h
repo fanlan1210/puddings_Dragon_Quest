@@ -21,6 +21,8 @@ public:
     void setAtk(int);
     int getAtk();
     double getDamageRate();
+    string getName();
+    void naming(string);
 private:
     int hp;
     int hp_max;
@@ -28,9 +30,10 @@ private:
     int mp_max;
     int atk;
     double damage_rate;
+    string name;
 };
 
-class Hero : public Entity,Skill{
+class Hero : public Entity,public Skill{
 public:
     Hero();
     Hero(int,int,int,int = 0);
@@ -42,10 +45,11 @@ private:
     int ap;
 };
 
-class Dragon : public Entity,Skill{
+class Dragon : public Entity,public Skill{
 public:
     Dragon();
     Dragon(int,int,int);
+    void attack(Entity &target);
 private:
     ;
 };
